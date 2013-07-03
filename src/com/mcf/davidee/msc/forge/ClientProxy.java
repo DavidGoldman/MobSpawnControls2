@@ -12,7 +12,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public File getMinecraftDirectory() {
-		return FMLClientHandler.instance().getClient().getMinecraftDir();
+		return FMLClientHandler.instance().getClient().mcDataDir;
 	}
 
 }

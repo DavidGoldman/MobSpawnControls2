@@ -1,5 +1,6 @@
 package com.mcf.davidee.gui.vanilla;
 
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
@@ -7,6 +8,8 @@ import org.lwjgl.opengl.GL11;
 import com.mcf.davidee.gui.Slider;
 
 public class SliderVanilla extends Slider {
+	
+	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/widgets.png");
 
 	public SliderVanilla(int width, int height, float value, SliderFormat format) {
 		super(width, height, value, format);
@@ -30,7 +33,7 @@ public class SliderVanilla extends Slider {
 			value = MathHelper.clamp_float(value, 0, 1);
 		}
 
-		mc.renderEngine.bindTexture("/gui/gui.png");
+		mc.renderEngine.func_110577_a(TEXTURE);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect(x, y, 0, 46, width / 2, height);
 		drawTexturedModalRect(x + width / 2, y, 200 - width / 2, 46, width / 2, height);

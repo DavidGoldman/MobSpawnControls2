@@ -1,11 +1,15 @@
 package com.mcf.davidee.gui.vanilla;
 
+import net.minecraft.client.resources.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 import com.mcf.davidee.gui.Button;
 import com.mcf.davidee.gui.Button.ButtonHandler;
 
 public class ButtonVanilla extends Button {
+	
+	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/widgets.png");
 	
 	protected String str;
 
@@ -21,7 +25,7 @@ public class ButtonVanilla extends Button {
 
 	@Override
 	public void draw(int mx, int my) {
-		mc.renderEngine.bindTexture("/gui/gui.png");
+		mc.renderEngine.func_110577_a(TEXTURE);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		boolean hover = inBounds(mx, my);
 		int u = 0, v = 46 + getStateOffset(hover);

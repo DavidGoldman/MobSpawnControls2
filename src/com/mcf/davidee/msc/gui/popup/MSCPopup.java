@@ -1,12 +1,16 @@
 package com.mcf.davidee.msc.gui.popup;
 
+import net.minecraft.client.resources.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 import com.mcf.davidee.gui.basic.BasicScreen;
 import com.mcf.davidee.gui.basic.OverlayScreen;
 
 public abstract class MSCPopup extends OverlayScreen {
-
+	
+	private static final ResourceLocation TEXTURE = new ResourceLocation("msc2", "textures/gui/window.png");
+	
 	public static final int WIDTH = 256, HEIGHT = 129;
 
 	public MSCPopup(BasicScreen bg) {
@@ -30,7 +34,7 @@ public abstract class MSCPopup extends OverlayScreen {
 		super.drawBackground();
 		drawGradientRect(0, 0, width, height, -1072689136, -804253680);
 		int x = (width - WIDTH) / 2, y = (height - HEIGHT) / 2;
-		mc.renderEngine.bindTexture("/gui/window.png");
+		mc.renderEngine.func_110577_a(TEXTURE);
 		GL11.glColor4f(1, 1, 1, 1);
 		drawTexturedModalRect(x, y, 0, 0, WIDTH, HEIGHT);
 	}
