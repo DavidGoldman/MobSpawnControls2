@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.network.packet.Packet;
 
 import com.mcf.davidee.msc.BiomeNameHelper;
 import com.mcf.davidee.msc.MobSpawnControls;
@@ -20,7 +21,6 @@ import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.ModListPacket;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
-import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
 import com.mcf.davidee.msc.packet.settings.SettingsPacket;
 import com.mcf.davidee.msc.spawning.CreatureTypeMap;
 import com.mcf.davidee.msc.spawning.MobHelper;
@@ -83,7 +83,11 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		int colon = data.indexOf(':');
 		String mod = data.substring(0,colon), entity = data.substring(colon+1);
 		ModConfig config = MobSpawnControls.instance.getConfig().getModConfig(mod);
-		PacketDispatcher.sendPacketToPlayer(config.getEntitySettingsPacket(entity), player);
+		Class entityClass = config.getEntityClass(entity);
+		EnumCreatureType type = config.getTypeMap().get(entityClass);
+		
+		Packet p = config.getSpawnMap().getEntitySettingPacket(mod, entity, type, entityClass);
+		PacketDispatcher.sendPacketToPlayer(p, player);
 	}
 	
 	@Override
@@ -168,7 +172,7 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		ModConfig config = MobSpawnControls.instance.getConfig().getModConfig(packet.mod);
 		Class entityClass = config.getEntityClass(packet.entity);
 		EnumCreatureType type = config.getTypeMap().get(entityClass);
-		config.getSpawnMap().setEntitySettings(entityClass, type, packet.entries);
+		config.getSpawnMap().setEntitySettings(config, entityClass, type, packet.entries);
 	}
 
 	@Override

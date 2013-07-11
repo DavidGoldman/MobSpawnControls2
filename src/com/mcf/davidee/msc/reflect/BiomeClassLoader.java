@@ -10,6 +10,7 @@ public class BiomeClassLoader {
 	 * not initialize until their class is loaded.
 	 *
 	 */
+	
 	public static void loadClass(String s) {
 		try {
 			Class.forName(s);

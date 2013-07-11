@@ -21,6 +21,7 @@ import net.minecraft.world.biome.SpawnListEntry;
 import com.mcf.davidee.msc.BiomeNameHelper;
 import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.Utils;
+import com.mcf.davidee.msc.config.ModConfig;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
@@ -84,12 +85,12 @@ public class SpawnMap {
 		groups.add(new GroupSetting(group));
 	}
 
-	public Packet getEntitySettingPacket(String mod, String entity, Class entityClass) {
+	public Packet getEntitySettingPacket(String mod, String entity, EnumCreatureType type, Class entityClass) {
 		List<BiomeEntry> spawning = new ArrayList<BiomeEntry>();
 		List<String> notSpawning = new ArrayList<String>();
 
 		for (GroupSetting s : groups) {
-			SpawnListEntry e = s.getSpawnList().getEntityEntry(entityClass);
+			SpawnListEntry e = s.getSpawnList().getEntityEntry(entityClass, type);
 			if (e == null)
 				notSpawning.add(s.group.getName());
 			else 
@@ -98,7 +99,7 @@ public class SpawnMap {
 
 		for (Entry<BiomeGenBase, BiomeSetting> entry : biomeMap.entrySet()) {
 			String biomeName = BiomeNameHelper.getBiomeName(entry.getKey());
-			SpawnListEntry e = entry.getValue().getBiomeSettings().getEntityEntry(entityClass);
+			SpawnListEntry e = entry.getValue().getBiomeSettings().getEntityEntry(entityClass, type);
 			if (e == null)
 				notSpawning.add(biomeName);
 			else
@@ -109,10 +110,24 @@ public class SpawnMap {
 				spawning.toArray(new BiomeEntry[0]), notSpawning.toArray(new String[0]));
 	}
 
-	public void setEntitySettings(Class entityClass, EnumCreatureType type, BiomeEntry[] entries) {
-		//TODO 
-		//Currently entities may be in different spawn lists than their defined type
-		//Most likely this will have to change otherwise this option will not work correctly
+	public void setEntitySettings(ModConfig config, Class entityClass, EnumCreatureType type, BiomeEntry[] entries) {
+		for (GroupSetting s : groups)
+			s.getSpawnList().removeEntityEntry(entityClass, type);
+		for (BiomeSetting s : biomeMap.values())
+			s.getBiomeSettings().removeEntityEntry(entityClass, type);
+		
+		for (BiomeEntry e : entries) {
+			SpawnListEntry newEntry = new SpawnListEntry(entityClass, e.weight, e.min, e.max);
+			
+			if (e.biome.contains(".")) { //Biome 
+				BiomeGenBase biome = BiomeNameHelper.getBiome(e.biome);
+				biomeMap.get(biome).getBiomeSettingsForEdit().getSpawnList(type).add(newEntry);
+			}
+			else { //Group
+				BiomeGroup group = config.getBiomeGroup(e.biome);
+				getSettings(group).getSpawnList().getSpawnList(type).add(newEntry);
+			}
+		}
 	}
 
 	public void setBiomeSection(BiomeGenBase biome, EnumCreatureType type, List<SpawnListEntry> entries) {

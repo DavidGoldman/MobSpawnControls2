@@ -1,11 +1,10 @@
 package com.mcf.davidee.gui.vanilla;
 
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Button.ButtonHandler;
 
 public class ButtonVanilla extends Button {
 	

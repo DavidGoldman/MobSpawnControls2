@@ -30,7 +30,7 @@ import cpw.mods.fml.common.network.Player;
 public class ClientPacketHandler extends MSCPacketHandler{
 
 	
-	//TODO Verify that the GUIs are open for the correct mod
+	//TODO Verify that the GUIs are open for the correct mod?
 	
 	private Minecraft mc;
 	
@@ -109,7 +109,7 @@ public class ClientPacketHandler extends MSCPacketHandler{
 
 	@Override
 	public void handleBiomeSetting(BiomeSettingPacket packet, Player player) {
-		// TODO Auto-generated method stub
+		// TODO 
 		
 	}
 	

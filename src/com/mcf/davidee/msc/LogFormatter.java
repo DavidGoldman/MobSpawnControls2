@@ -8,6 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 public final class LogFormatter extends Formatter {
+	
+	private String lineSep = System.getProperty("line.separator");
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
 
 	public String format(LogRecord record) {
@@ -17,7 +19,7 @@ public final class LogFormatter extends Formatter {
 		sb.append(" [" + record.getLevel().getLocalizedName() + "] ");
 
 		sb.append(record.getMessage());
-		sb.append(System.getProperty("line.separator"));
+		sb.append(lineSep);
 		Throwable thr = record.getThrown();
 
 		if (thr != null) {

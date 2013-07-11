@@ -21,12 +21,8 @@ import com.mcf.davidee.msc.reflect.BiomeClassLoader;
 import com.mcf.davidee.msc.spawning.MobHelper;
 
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
-import cpw.mods.fml.common.Mod.ServerStopping;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -39,7 +35,7 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod( modid = "MSC2", name="Mob Spawn Controls 2", dependencies = "after:*", version="b2.5.0")
+@Mod( modid = "MSC2", name="Mob Spawn Controls 2", dependencies = "after:*", version="b2.5.1")
 @NetworkMod(
 		clientSideRequired = false,
 		serverSideRequired = false,
@@ -67,7 +63,7 @@ public class MobSpawnControls{
 	private SpawnConfiguration config, defaultConfig;
 
 
-	@PreInit 
+	@EventHandler 
 	public void preInit(FMLPreInitializationEvent event) {
 		ModMetadata modMeta = event.getModMetadata();
 		modMeta.authorList = Arrays.asList(new String[] { "Davidee" });
@@ -78,7 +74,7 @@ public class MobSpawnControls{
 		modMeta.url = "http://www.minecraftforum.net/topic/1553186-151/";
 	}
 
-	@Init
+	@EventHandler 
 	public void load(FMLInitializationEvent event) {
 		logger.setLevel(Level.ALL);
 
@@ -100,7 +96,7 @@ public class MobSpawnControls{
 		TickRegistry.registerScheduledTickHandler(new SpawnFreqTicker(), Side.SERVER);
 	}
 
-	@PostInit
+	@EventHandler 
 	public void modsLoaded(FMLPostInitializationEvent event) {
 		BiomeClassLoader.loadBiomeClasses();
 		logger.info("Generating default creature type map...");
@@ -113,7 +109,7 @@ public class MobSpawnControls{
 		defaultConfig.save();
 	}
 
-	@ServerStarting 
+	@EventHandler  
 	public void serverStarting(FMLServerStartingEvent event) {
 		MinecraftServer server = event.getServer();
 		WorldServer world = server.worldServerForDimension(0);
@@ -125,7 +121,7 @@ public class MobSpawnControls{
 		}
 	}
 
-	@ServerStopping
+	@EventHandler 
 	public void serverStopping(FMLServerStoppingEvent event) {
 		logger.info("Unloading spawn configuration");
 		config = null;

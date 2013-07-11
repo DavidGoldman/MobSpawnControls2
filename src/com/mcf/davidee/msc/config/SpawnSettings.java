@@ -50,9 +50,11 @@ public class SpawnSettings {
 	public boolean isMasterEnabled() {
 		return masterEnabled;
 	}
+	
 	public int getCreatureFrequency() {
 		return creatureFreq;
 	}
+	
 	public boolean canEdit() {
 		return canEdit;
 	}

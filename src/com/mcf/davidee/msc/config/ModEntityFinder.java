@@ -6,7 +6,7 @@ import java.util.List;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 
-public class ModEntityHandler {
+public class ModEntityFinder {
 	
 	private static List<ModContainer> entityMods = null;
 

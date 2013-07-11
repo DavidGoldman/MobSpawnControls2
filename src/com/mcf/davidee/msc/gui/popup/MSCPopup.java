@@ -1,6 +1,6 @@
 package com.mcf.davidee.msc.gui.popup;
 
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 

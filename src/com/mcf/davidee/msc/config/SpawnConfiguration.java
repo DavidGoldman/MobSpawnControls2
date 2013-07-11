@@ -32,7 +32,7 @@ public class SpawnConfiguration {
 		settings = new SpawnSettings(folder);
 		configs = new ArrayList<ModConfig>();
 		configs.add(new ModConfig(null, folder));
-		for (ModContainer c : ModEntityHandler.getEntityMods())
+		for (ModContainer c : ModEntityFinder.getEntityMods())
 			configs.add(new ModConfig(c, folder));
 	}
 

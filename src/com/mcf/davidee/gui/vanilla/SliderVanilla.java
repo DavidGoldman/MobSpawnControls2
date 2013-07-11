@@ -1,7 +1,7 @@
 package com.mcf.davidee.gui.vanilla;
 
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 

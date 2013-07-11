@@ -34,15 +34,15 @@ public class SpawnList {
 		this.a = copySpawnListEntries(entryList.a);
 	}
 
-	public SpawnListEntry getEntityEntry(Class entityClass) {
-		SpawnListEntry entry = getEntityEntry(entityClass, m);
-		if (entry == null)
-			entry = getEntityEntry(entityClass, c);
-		if (entry == null)
-			entry = getEntityEntry(entityClass, w);
-		if (entry == null)
-			entry = getEntityEntry(entityClass, a);
-		return entry;
+	public SpawnListEntry getEntityEntry(Class entityClass, EnumCreatureType type) {
+		return getEntityEntry(entityClass, getSpawnList(type));
+	}
+	
+	private SpawnListEntry getEntityEntry(Class entityClass, List<SpawnListEntry> list) {
+		for (SpawnListEntry e : list) 
+			if (e.entityClass == entityClass)
+				return e;
+		return null;
 	}
 
 	public void removeEntityEntry(Class entityClass, EnumCreatureType type) {
@@ -55,13 +55,6 @@ public class SpawnList {
 				it.remove();
 				break;
 			}
-	}
-
-	private SpawnListEntry getEntityEntry(Class entityClass, List<SpawnListEntry> list) {
-		for (SpawnListEntry e : list) 
-			if (e.entityClass == entityClass)
-				return e;
-		return null;
 	}
 
 	public void clear() {

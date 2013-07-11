@@ -120,7 +120,6 @@ public class EditEntityScreen extends MSCScreen{
 		subTitle = new Label(packet.entity);
 		close = new ButtonVanilla(50, 20, "Cancel", new CloseHandler());
 		save = new ButtonVanilla(50, 20, "Save", this);
-		save.setEnabled(false);
 		
 		enabled = new CheckboxVanilla("Enabled", true);
 		
