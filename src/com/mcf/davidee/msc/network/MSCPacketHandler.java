@@ -13,6 +13,8 @@ import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.ModListPacket;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
+import com.mcf.davidee.msc.packet.settings.EvaluatedBiomePacket;
+import com.mcf.davidee.msc.packet.settings.EvaluatedGroupPacket;
 import com.mcf.davidee.msc.packet.settings.SettingsPacket;
 
 import cpw.mods.fml.common.network.IPacketHandler;
@@ -32,7 +34,10 @@ public abstract class MSCPacketHandler implements IPacketHandler {
 	public abstract void handleBiomeSetting(BiomeSettingPacket packet, Player player);
 	public abstract void handleEntityList(EntityListPacket packet, Player player);
 	public abstract void handleEntitySetting(EntitySettingPacket packet, Player player);
+	public abstract void handleEvaluatedBiome(EvaluatedBiomePacket packet, Player player);
+	public abstract void handleEvaluatedGroup(EvaluatedGroupPacket packet, Player player);
 	public abstract void handleDebug(DebugPacket packet, Player player);
+	
 	protected abstract boolean hasPermission(Player player);
 	
 	@Override

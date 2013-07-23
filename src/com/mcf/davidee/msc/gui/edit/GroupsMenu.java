@@ -1,4 +1,4 @@
-package com.mcf.davidee.msc.gui;
+package com.mcf.davidee.msc.gui.edit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import com.mcf.davidee.gui.focusable.FocusableLabel;
 import com.mcf.davidee.gui.focusable.FocusableWidget;
 import com.mcf.davidee.gui.vanilla.ButtonVanilla;
 import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.gui.popup.GroupPopup;
 import com.mcf.davidee.msc.gui.popup.PopupYesNo;
 import com.mcf.davidee.msc.gui.popup.PopupYesNo.YesNoHandler;

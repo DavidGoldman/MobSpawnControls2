@@ -1,4 +1,4 @@
-package com.mcf.davidee.msc.gui;
+package com.mcf.davidee.msc.gui.edit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import com.mcf.davidee.gui.focusable.FocusableWidget;
 import com.mcf.davidee.gui.vanilla.ButtonVanilla;
 import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
 import com.mcf.davidee.msc.Utils;
+import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.CreatureTypePacket;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;

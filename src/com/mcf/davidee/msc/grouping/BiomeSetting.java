@@ -49,9 +49,8 @@ public class BiomeSetting {
 	}
 
 	public void sync() {
-		for (EnumCreatureType type : EnumCreatureType.values()) {
+		for (EnumCreatureType type : EnumCreatureType.values()) 
 			BiomeReflector.reflectList(biome, type).addAll(active.getSpawnList(type));
-		}
 	}
 	
 	public void write(BufferedWriter writer, String textToIgnore) throws IOException {
@@ -89,6 +88,10 @@ public class BiomeSetting {
 	
 	public SpawnList getBiomeSettings() {
 		return biomeSettings;
+	}
+	
+	public SpawnList getActiveList() {
+		return active;
 	}
 
 	private void mergeLists(List<SpawnListEntry> myEntries, List<SpawnListEntry> theirEntries) {

@@ -1,4 +1,4 @@
-package com.mcf.davidee.msc.gui;
+package com.mcf.davidee.msc.gui.list;
 
 import net.minecraft.client.gui.GuiScreen;
 
@@ -10,6 +10,9 @@ import com.mcf.davidee.gui.basic.Label;
 import com.mcf.davidee.gui.focusable.FocusableLabel;
 import com.mcf.davidee.gui.vanilla.ButtonVanilla;
 import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.msc.gui.MSCScreen;
+import com.mcf.davidee.msc.gui.MobTypesMenu;
+import com.mcf.davidee.msc.gui.SpawnControlMenu;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.ModListPacket;

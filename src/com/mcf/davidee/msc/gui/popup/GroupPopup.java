@@ -11,7 +11,7 @@ import com.mcf.davidee.gui.TextField.CharacterFilter;
 import com.mcf.davidee.gui.basic.Label;
 import com.mcf.davidee.gui.vanilla.ButtonVanilla;
 import com.mcf.davidee.gui.vanilla.TextFieldVanilla;
-import com.mcf.davidee.msc.gui.GroupsMenu;
+import com.mcf.davidee.msc.gui.edit.GroupsMenu;
 
 public class GroupPopup extends MSCPopup {
 

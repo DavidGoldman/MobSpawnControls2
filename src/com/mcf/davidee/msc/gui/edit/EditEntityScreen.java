@@ -1,4 +1,4 @@
-package com.mcf.davidee.msc.gui;
+package com.mcf.davidee.msc.gui.edit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ import com.mcf.davidee.gui.vanilla.ButtonVanilla;
 import com.mcf.davidee.gui.vanilla.CheckboxVanilla;
 import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
 import com.mcf.davidee.gui.vanilla.sliders.IntSlider;
+import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
@@ -25,6 +26,9 @@ import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class EditEntityScreen extends MSCScreen{
+	
+	public static final int ENABLED_COLOR = 0x49EC65, ENABLED_HOVER = 0x3CD5BC, ENABLED_FOCUS = 0xFF00;
+	public static final int DIS_COLOR = 0xFA3333, DIS_HOVER = 0xEB489F, DIS_FOCUS = 0xFF0000;
 	
 	private Label title, subTitle;
 	private Button save, close;
@@ -75,17 +79,17 @@ public class EditEntityScreen extends MSCScreen{
 			e.weight = weight.getIntValue();
 			e.min = min.getIntValue();
 			e.max = max.getIntValue();
-			label.setColor(0x49EC65);
-			label.setHoverColor(0x3CD5BC);
-			label.setFocusColor(0xFF00);
+			label.setColor(ENABLED_COLOR);
+			label.setHoverColor(ENABLED_HOVER);
+			label.setFocusColor(ENABLED_FOCUS);
 		}
 		else {
 			e.weight = 0;
 			e.min = min.getIntValue();
 			e.max = max.getIntValue();
-			label.setColor(0xFA3333);
-			label.setHoverColor(0xEB489F);
-			label.setFocusColor(0xFF0000);
+			label.setColor(DIS_COLOR);
+			label.setHoverColor(DIS_HOVER);
+			label.setFocusColor(DIS_FOCUS);
 		}
 	}
 
@@ -136,9 +140,9 @@ public class EditEntityScreen extends MSCScreen{
 		for (int i = 0; i < labels.length; ++i) {
 			BiomeEntry e = arr[i];
 			if (e.weight != 0) //enabled
-				labels[i] = new FocusableLabel(e.biome, 0x49EC65, 0x3CD5BC, 0xFF00);
+				labels[i] = new FocusableLabel(e.biome, ENABLED_COLOR, ENABLED_HOVER, ENABLED_FOCUS);
 			else //disabled
-				labels[i] = new FocusableLabel(e.biome, 0xFA3333, 0xEB489F, 0xFF0000);
+				labels[i] = new FocusableLabel(e.biome, DIS_COLOR, DIS_HOVER, DIS_FOCUS);
 			labels[i].setUserData(e);
 		}
 		

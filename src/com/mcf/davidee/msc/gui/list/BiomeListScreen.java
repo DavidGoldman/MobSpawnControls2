@@ -1,4 +1,4 @@
-package com.mcf.davidee.msc.gui;
+package com.mcf.davidee.msc.gui.list;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import com.mcf.davidee.gui.focusable.FocusableLabel;
 import com.mcf.davidee.gui.focusable.FocusableWidget;
 import com.mcf.davidee.gui.vanilla.ButtonVanilla;
 import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.BiomeListPacket;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
@@ -114,8 +115,14 @@ public class BiomeListScreen extends MSCScreen{
 		}
 		if (button == select) {
 			button.setEnabled(false);
-			String type = (packet.evalRequest) ? "eval-biome" : "biome";
 			String selected = ((FocusableLabel)labelContainer.getFocusedWidget()).getText();
+			
+			if (packet.evalRequest) {
+				if (selected.contains(".")) // Biome
+					PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.EVALUATED_BIOME, packet.mod + ':' + selected));
+				else  //Group
+ 					PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.EVALUATED_GROUP, packet.mod + ':' + selected));
+			}
 		}
 	}
 

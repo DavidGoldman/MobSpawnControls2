@@ -35,7 +35,7 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod( modid = "MSC2", name="Mob Spawn Controls 2", dependencies = "after:*", version="b2.5.1")
+@Mod( modid = "MSC2", name="Mob Spawn Controls 2", dependencies = "after:*", version="b2.5.2")
 @NetworkMod(
 		clientSideRequired = false,
 		serverSideRequired = false,

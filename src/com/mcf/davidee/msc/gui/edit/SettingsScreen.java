@@ -1,4 +1,4 @@
-package com.mcf.davidee.msc.gui;
+package com.mcf.davidee.msc.gui.edit;
 
 import net.minecraft.client.gui.GuiScreen;
 
@@ -15,6 +15,7 @@ import com.mcf.davidee.gui.vanilla.TextFieldVanilla;
 import com.mcf.davidee.gui.vanilla.TextFieldVanilla.NumberFilter;
 import com.mcf.davidee.gui.vanilla.sliders.IntSlider;
 import com.mcf.davidee.msc.Utils;
+import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.settings.SettingsPacket;

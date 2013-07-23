@@ -21,6 +21,8 @@ import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.ModListPacket;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
+import com.mcf.davidee.msc.packet.settings.EvaluatedBiomePacket;
+import com.mcf.davidee.msc.packet.settings.EvaluatedGroupPacket;
 import com.mcf.davidee.msc.packet.settings.SettingsPacket;
 import com.mcf.davidee.msc.spawning.CreatureTypeMap;
 import com.mcf.davidee.msc.spawning.MobHelper;
@@ -45,6 +47,9 @@ public class ServerPacketHandler extends MSCPacketHandler{
 	public void handleBiomeList(BiomeListPacket pkt, Player player) { }
 	public void handleEntityList(EntityListPacket pkt, Player player) { } 
 	public void handleDebug(DebugPacket pkt, Player player){ }
+	public void handleEvaluatedBiome(EvaluatedBiomePacket packet, Player player) { }
+	public void handleEvaluatedGroup(EvaluatedGroupPacket packet, Player player) { }
+	
 
 	@Override
 	public void handleRequest(PacketType type, String dat, Player player) {
@@ -70,6 +75,12 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		case ENTITY_SETTING:
 			handleEntitySettingRequest(dat, player);
 			break;
+		case EVALUATED_BIOME:
+			handleEvaluatedBiomeRequest(dat, player);
+			break;
+		case EVALUATED_GROUP:
+			handleEvaluatedGroupRequest(dat, player);
+			break;
 		case DEBUG:
 			//TODO
 			PacketDispatcher.sendPacketToPlayer(MSCPacket.getPacket(PacketType.DEBUG), player);
@@ -77,6 +88,20 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		default:
 			break;
 		}
+	}
+
+	private void handleEvaluatedBiomeRequest(String data, Player player) {
+		int colon = data.indexOf(':');
+		String mod = data.substring(0,colon), biome = data.substring(colon+1);
+		Packet p = MobSpawnControls.instance.getConfig().getModConfig(mod).getSpawnMap().getEvaluatedBiomePacket(mod, biome);
+		PacketDispatcher.sendPacketToPlayer(p, player);
+	}
+
+	private void handleEvaluatedGroupRequest(String data, Player player) {
+		int colon = data.indexOf(':');
+		String mod = data.substring(0,colon), group = data.substring(colon+1);
+		Packet p = MobSpawnControls.instance.getConfig().getModConfig(mod).getSpawnMap().getEvaluatedGroupPacket(mod, group);
+		PacketDispatcher.sendPacketToPlayer(p, player);
 	}
 
 	private void handleEntitySettingRequest(String data, Player player) {
@@ -180,5 +205,7 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

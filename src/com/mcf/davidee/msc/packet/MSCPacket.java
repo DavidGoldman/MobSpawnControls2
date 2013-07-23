@@ -12,6 +12,8 @@ import com.google.common.primitives.UnsignedBytes;
 import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.network.MSCPacketHandler;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
+import com.mcf.davidee.msc.packet.settings.EvaluatedBiomePacket;
+import com.mcf.davidee.msc.packet.settings.EvaluatedGroupPacket;
 import com.mcf.davidee.msc.packet.settings.SettingsPacket;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
@@ -38,6 +40,8 @@ public abstract class MSCPacket {
 		ENTITY_LIST(EntityListPacket.class),
 		ENTITY_SETTING(EntitySettingPacket.class),
 		SETTINGS(SettingsPacket.class),
+		EVALUATED_BIOME(EvaluatedBiomePacket.class),
+		EVALUATED_GROUP(EvaluatedGroupPacket.class),
 		DEBUG(DebugPacket.class);
 
 		private Class<? extends MSCPacket> packetType;

@@ -3,6 +3,8 @@ package com.mcf.davidee.msc.grouping;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -83,6 +85,31 @@ public class SpawnMap {
 
 	public void addGroup(BiomeGroup group) {
 		groups.add(new GroupSetting(group));
+	}
+	
+	public Packet getEvaluatedBiomePacket(String mod, String biome) {
+		String[][] entities = new String[4][];
+		SpawnList spawnList = biomeMap.get(BiomeNameHelper.getBiome(biome)).getBiomeSettings();
+		for (EnumCreatureType type : EnumCreatureType.values()) {
+			int index = type.ordinal();
+			
+			List<SpawnListEntry> entries = spawnList.getSpawnList(type);
+			entities[index] = new String[entries.size()];
+			for (int i = 0; i < entries.size(); ++i)
+				entities[index][i] = SpawnList.entryToString(entries.get(i)).replace(mod, "");
+			Arrays.sort(entities[index]);
+		}
+		return MSCPacket.getPacket(PacketType.EVALUATED_BIOME, mod, biome, entities);
+	}
+	
+	public Packet getEvaluatedGroupPacket(String mod, String group) {
+		List<String> biomeNames = new ArrayList<String>();
+		BiomeGroup biomeGroup = getGroup(group);
+		for (BiomeGenBase biome : biomeGroup.evaluate()) 
+			biomeNames.add(BiomeNameHelper.getBiomeName(biome));
+		Collections.sort(biomeNames);
+		return MSCPacket.getPacket(PacketType.EVALUATED_GROUP, mod, group, 
+				biomeNames.toArray(new String[0]));
 	}
 
 	public Packet getEntitySettingPacket(String mod, String entity, EnumCreatureType type, Class entityClass) {
@@ -184,7 +211,7 @@ public class SpawnMap {
 		getGroup(group).setOps(ops);
 	}
 
-	private BiomeGroup getGroup(String group) {
+	private BiomeGroup getGroup(String group) throws IllegalArgumentException {
 		for (GroupSetting s : groups)
 			if (s.group.getName().equalsIgnoreCase(group))
 				return s.group;
