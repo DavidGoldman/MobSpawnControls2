@@ -177,11 +177,12 @@ public class SpawnSettings {
 	}
 
 	public Packet createPacket() {
-		return MSCPacket.getPacket(PacketType.SETTINGS, readOnly, spawnCaps, creatureFreq);
+		return MSCPacket.getPacket(PacketType.SETTINGS, readOnly, masterEnabled, spawnCaps, creatureFreq);
 	}
 
 	public void readPacket(SettingsPacket pkt) {
 		readOnly = pkt.readOnly;
+		masterEnabled = pkt.masterEnabled;
 		spawnCaps = pkt.caps;
 		creatureFreq = pkt.creatureFreq;
 		for (EnumCreatureType type : EnumCreatureType.values())

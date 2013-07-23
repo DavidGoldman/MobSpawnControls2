@@ -123,6 +123,8 @@ public class BiomeListScreen extends MSCScreen{
 				else  //Group
  					PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.EVALUATED_GROUP, packet.mod + ':' + selected));
 			}
+			else
+				PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.BIOME_SETTING, packet.mod + ':' + selected));
 		}
 	}
 

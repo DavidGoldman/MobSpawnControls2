@@ -7,6 +7,7 @@ import java.util.List;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
 
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.SpawnListEntry;
 
@@ -37,8 +38,8 @@ public class SpawnList {
 	public SpawnListEntry getEntityEntry(Class entityClass, EnumCreatureType type) {
 		return getEntityEntry(entityClass, getSpawnList(type));
 	}
-	
-	private SpawnListEntry getEntityEntry(Class entityClass, List<SpawnListEntry> list) {
+
+	private static SpawnListEntry getEntityEntry(Class entityClass, List<SpawnListEntry> list) {
 		for (SpawnListEntry e : list) 
 			if (e.entityClass == entityClass)
 				return e;
@@ -98,6 +99,7 @@ public class SpawnList {
 		return EntityList.classToStringMapping.get(e.entityClass) + "(" + e.itemWeight + "-" + e.minGroupCount + "-" + e.maxGroupCount + ")";
 	}
 
+
 	public static String entriesToString(List<SpawnListEntry> e, String toIgnore) {
 		String s = "";
 		for (Iterator<SpawnListEntry> it = e.iterator(); it.hasNext(); ){
@@ -108,4 +110,23 @@ public class SpawnList {
 		return s;
 	}
 
+	public static List<Class> getDisabledEntities(List<SpawnListEntry> spawning, List<Class<? extends EntityLiving>> list) {
+		List<Class> disabled = new ArrayList<Class>();
+		
+		for (Class clazz : list) {
+			boolean found = false;
+
+			for (SpawnListEntry e : spawning) {
+				if (e.entityClass == clazz) {
+					found = true;
+					break;
+				}
+			}
+			
+			if (!found)
+				disabled.add(clazz);
+
+		}
+		return disabled;
+	}
 }

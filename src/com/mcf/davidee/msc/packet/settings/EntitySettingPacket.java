@@ -16,14 +16,14 @@ public class EntitySettingPacket extends MSCPacket {
 	public String mod;
 	public String entity;
 	public BiomeEntry[] entries;
-	public String[] empty;
+	public String[] disabled;
 	
 	@Override
 	public MSCPacket readData(Object... data) {
 		mod = (String) data[0];
 		entity = (String) data[1];
 		entries = (BiomeEntry[]) data[2];
-		empty = (String[]) data[3];
+		disabled = (String[]) data[3];
 		return this;
 	}
 
@@ -40,7 +40,7 @@ public class EntitySettingPacket extends MSCPacket {
 			dat.writeInt(e.min);
 			dat.writeInt(e.max);
 		}
-		writeStringArray(empty, dat);
+		writeStringArray(disabled, dat);
 		return dat.toByteArray();
 	}
 
@@ -52,16 +52,16 @@ public class EntitySettingPacket extends MSCPacket {
 		entries = new BiomeEntry[pkt.readInt()];
 		for (int i = 0; i < entries.length; ++i)
 			entries[i] = new BiomeEntry(pkt.readUTF(), pkt.readInt(), pkt.readInt(), pkt.readInt());
-		empty = readStringArray(pkt);
+		disabled = readStringArray(pkt);
 		return this;
 	}
 	
 	public BiomeEntry[] getOrderedEntries() {
-		BiomeEntry[] allEntries = new BiomeEntry[entries.length + empty.length];
+		BiomeEntry[] allEntries = new BiomeEntry[entries.length + disabled.length];
 		for (int i = 0; i < entries.length; ++i)
 			allEntries[i] = entries[i];
-		for (int i = 0; i < empty.length; ++i)
-			allEntries[entries.length + i] = new BiomeEntry(empty[i]);
+		for (int i = 0; i < disabled.length; ++i)
+			allEntries[entries.length + i] = new BiomeEntry(disabled[i]);
 		Arrays.sort(allEntries, new Comparator<BiomeEntry>() {
 			public int compare(BiomeEntry a, BiomeEntry b) {
 				return a.biome.compareTo(b.biome);
@@ -76,6 +76,7 @@ public class EntitySettingPacket extends MSCPacket {
 	}
 
 	public static class BiomeEntry {
+		
 		public String biome;
 		public int weight;
 		public int min;

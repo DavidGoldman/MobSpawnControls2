@@ -1,5 +1,7 @@
 package com.mcf.davidee.msc.gui;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.gui.GuiScreen;
 
 import com.mcf.davidee.gui.Button;
@@ -18,7 +20,7 @@ public abstract class MSCScreen extends BasicScreen implements ButtonHandler{
 	}
 
 	protected void unhandledKeyTyped(char c, int code) {
-		if (code == 1)
+		if (code == Keyboard.KEY_ESCAPE)
 			mc.displayGuiScreen(null);
 	}
 

@@ -11,14 +11,16 @@ import cpw.mods.fml.common.network.Player;
 public class SettingsPacket extends MSCPacket {
 
 	public boolean readOnly;
+	public boolean masterEnabled;
 	public int[] caps;
 	public int creatureFreq;
 
 	@Override
 	public MSCPacket readData(Object... data) {
 		readOnly = (Boolean) data[0];
-		caps = (int[]) data[1];
-		creatureFreq = (Integer) data[2];
+		masterEnabled = (Boolean) data[1];
+		caps = (int[]) data[2];
+		creatureFreq = (Integer) data[3];
 		return this;
 	}
 
@@ -26,6 +28,7 @@ public class SettingsPacket extends MSCPacket {
 	public byte[] generatePacket() {
 		ByteArrayDataOutput dat = ByteStreams.newDataOutput();
 		dat.writeBoolean(readOnly);
+		dat.writeBoolean(masterEnabled);
 		for (int i = 0; i < caps.length; ++i)
 			dat.writeInt(caps[i]);
 		dat.writeInt(creatureFreq);
@@ -35,6 +38,7 @@ public class SettingsPacket extends MSCPacket {
 	@Override
 	public MSCPacket readPacket(ByteArrayDataInput dat) {
 		readOnly = dat.readBoolean();
+		masterEnabled = dat.readBoolean();
 		caps = new int[4];
 		for (int i = 0; i < caps.length; ++i)
 			caps[i] = dat.readInt();

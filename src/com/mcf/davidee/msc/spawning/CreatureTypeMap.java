@@ -29,7 +29,6 @@ public class CreatureTypeMap {
 	}
 
 	
-	
 	public List<Class<? extends EntityLiving>> getEntitiesOfType(EnumCreatureType type) {
 		List<Class<? extends EntityLiving>> list = new ArrayList<Class<? extends EntityLiving>>();
 		for (Entry<Class<? extends EntityLiving>, EnumCreatureType> entry : map.entrySet()) 

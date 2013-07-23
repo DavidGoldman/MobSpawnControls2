@@ -278,7 +278,7 @@ public class ModConfig {
 	}
 
 	//Return the simplified Entity name
-	private String getEntityName(Class<? extends EntityLiving> cls) {
+	public String getEntityName(Class<? extends EntityLiving> cls) {
 		String s = (String) EntityList.classToStringMapping.get(cls);
 		return (container == null) ? s : s.replace(configName + ".", "");
 	}

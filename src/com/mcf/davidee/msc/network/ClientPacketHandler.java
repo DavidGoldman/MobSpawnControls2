@@ -7,6 +7,7 @@ import com.mcf.davidee.msc.gui.DebugScreen;
 import com.mcf.davidee.msc.gui.MainMenu;
 import com.mcf.davidee.msc.gui.MobTypesMenu;
 import com.mcf.davidee.msc.gui.SpawnControlMenu;
+import com.mcf.davidee.msc.gui.edit.EditBiomeScreen;
 import com.mcf.davidee.msc.gui.edit.EditCreatureTypeScreen;
 import com.mcf.davidee.msc.gui.edit.EditEntityScreen;
 import com.mcf.davidee.msc.gui.edit.GroupsMenu;
@@ -22,12 +23,12 @@ import com.mcf.davidee.msc.packet.DebugPacket;
 import com.mcf.davidee.msc.packet.EntityListPacket;
 import com.mcf.davidee.msc.packet.GroupsPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
+import com.mcf.davidee.msc.packet.ModListPacket;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
 import com.mcf.davidee.msc.packet.settings.EvaluatedBiomePacket;
 import com.mcf.davidee.msc.packet.settings.EvaluatedGroupPacket;
 import com.mcf.davidee.msc.packet.settings.SettingsPacket;
-import com.mcf.davidee.msc.packet.ModListPacket;
 
 import cpw.mods.fml.common.network.Player;
 
@@ -113,8 +114,9 @@ public class ClientPacketHandler extends MSCPacketHandler{
 
 	@Override
 	public void handleBiomeSetting(BiomeSettingPacket packet, Player player) {
-		// TODO 
-		
+		if (mc.currentScreen instanceof BiomeListScreen || 
+				mc.currentScreen instanceof SpawnControlMenu && packet.biome.equalsIgnoreCase("master"))
+			mc.displayGuiScreen(new EditBiomeScreen(packet, mc.currentScreen));
 	}
 
 	@Override

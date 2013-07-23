@@ -107,7 +107,7 @@ public class ModConfigParser {
 				String entities = line.substring(index + 1);
 
 				BiomeGenBase biome = (biomeName.equalsIgnoreCase("master")) ? null : BiomeNameHelper.getBiome(biomeName);
-				BiomeGroup group = (biome == null) ? config.getBiomeGroup(biomeName) : null;
+				BiomeGroup group = (biome == null && !biomeName.equalsIgnoreCase("master")) ? config.getBiomeGroup(biomeName) : null;
 				EnumCreatureType creatureType = MobHelper.typeOf(type);
 
 				//Biome/Master setting, creature type is valid

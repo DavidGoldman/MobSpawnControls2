@@ -26,8 +26,10 @@ import com.mcf.davidee.msc.Utils;
 import com.mcf.davidee.msc.config.ModConfig;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
+import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket.EntityEntry;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
 import com.mcf.davidee.msc.reflect.BiomeReflector;
+import com.mcf.davidee.msc.spawning.CreatureTypeMap;
 import com.mcf.davidee.msc.spawning.SpawnList;
 
 public class SpawnMap {
@@ -110,6 +112,32 @@ public class SpawnMap {
 		Collections.sort(biomeNames);
 		return MSCPacket.getPacket(PacketType.EVALUATED_GROUP, mod, group, 
 				biomeNames.toArray(new String[0]));
+	}
+	
+	public Packet getBiomeSettingPacket(String mod, String biome, ModConfig config) {
+		EntityEntry[][] spawning = new EntityEntry[4][];
+		String[][] notSpawning = new String[4][];
+		SpawnList spawnList =  biome.equalsIgnoreCase("master") ? master : (biome.contains(".") ?
+				  biomeMap.get(BiomeNameHelper.getBiome(biome)).getBiomeSettings() : getSettings(biome).getSpawnList());
+		
+		for (EnumCreatureType type : EnumCreatureType.values()) {
+			int index = type.ordinal();
+			List<EntityEntry> entries = new ArrayList<EntityEntry>();
+			List<String> disabled = new ArrayList<String>();
+			
+			for (SpawnListEntry e : spawnList.getSpawnList(type)) {
+				String entityName = config.getEntityName(e.entityClass);
+				entries.add(new EntityEntry(entityName, e.itemWeight, e.minGroupCount, e.maxGroupCount));
+			}
+			
+			for (Class c : SpawnList.getDisabledEntities(spawnList.getSpawnList(type), config.getTypeMap().getEntitiesOfType(type))) 
+				disabled.add(config.getEntityName(c));
+			
+			spawning[index] = entries.toArray(new EntityEntry[0]);
+			notSpawning[index] = disabled.toArray(new String[0]);
+		}
+		
+		return MSCPacket.getPacket(PacketType.BIOME_SETTING, mod, biome, spawning, notSpawning);
 	}
 
 	public Packet getEntitySettingPacket(String mod, String entity, EnumCreatureType type, Class entityClass) {
@@ -241,6 +269,10 @@ public class SpawnMap {
 				return s;
 		MobSpawnControls.getLogger().severe("Could not find group \"" + group + "\"");
 		throw new RuntimeException("MSC: Unknown group \"" + group.getName() + "\"");
+	}
+	
+	private GroupSetting getSettings(String group) {
+		return getSettings(getGroup(group));
 	}
 
 	private static class BiomeComparator implements Comparator<BiomeGenBase> {

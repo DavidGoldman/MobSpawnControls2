@@ -1,14 +1,18 @@
 package com.mcf.davidee.msc.network;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.SpawnListEntry;
 
 import com.mcf.davidee.msc.BiomeNameHelper;
 import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.config.ModConfig;
+import com.mcf.davidee.msc.config.SpawnSettings;
 import com.mcf.davidee.msc.grouping.BiomeGroup;
 import com.mcf.davidee.msc.grouping.SpawnMap;
 import com.mcf.davidee.msc.packet.BiomeListPacket;
@@ -20,6 +24,7 @@ import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.ModListPacket;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket;
+import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket.EntityEntry;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
 import com.mcf.davidee.msc.packet.settings.EvaluatedBiomePacket;
 import com.mcf.davidee.msc.packet.settings.EvaluatedGroupPacket;
@@ -34,7 +39,11 @@ public class ServerPacketHandler extends MSCPacketHandler{
 
 	@Override
 	public void handleSettings(SettingsPacket pkt, Player player) {
-		MobSpawnControls.instance.getConfig().getSettings().readPacket(pkt);
+		SpawnSettings settings = MobSpawnControls.instance.getConfig().getSettings();
+		boolean wasMasterEnabled = settings.isMasterEnabled();
+		settings.readPacket(pkt);
+		if (wasMasterEnabled != settings.isMasterEnabled()) //Resync 
+			MobSpawnControls.instance.getConfig().sync();
 	}
 
 	@Override
@@ -69,6 +78,9 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		case BIOME_LIST:
 			handleBiomeListRequest(dat, player);
 			break;
+		case BIOME_SETTING:
+			handleBiomeSettingRequest(dat, player);
+			break;
 		case ENTITY_LIST:
 			handleEntityListRequest(dat, player);
 			break;
@@ -101,6 +113,14 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		int colon = data.indexOf(':');
 		String mod = data.substring(0,colon), group = data.substring(colon+1);
 		Packet p = MobSpawnControls.instance.getConfig().getModConfig(mod).getSpawnMap().getEvaluatedGroupPacket(mod, group);
+		PacketDispatcher.sendPacketToPlayer(p, player);
+	}
+	
+	private void handleBiomeSettingRequest(String data, Player player) {
+		int colon = data.indexOf(':');
+		String mod = data.substring(0,colon), biome = data.substring(colon+1);
+		ModConfig modConfig = MobSpawnControls.instance.getConfig().getModConfig(mod);
+		Packet p = modConfig.getSpawnMap().getBiomeSettingPacket(mod, biome, modConfig);
 		PacketDispatcher.sendPacketToPlayer(p, player);
 	}
 
@@ -189,7 +209,6 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		for (EnumCreatureType type : EnumCreatureType.values())
 			names[type.ordinal()] = config.getEntityNames(type).toArray(new String[0]);
 		PacketDispatcher.sendPacketToPlayer(MSCPacket.getPacket(PacketType.ENTITY_LIST, mod, names), player);
-		
 	}
 
 	@Override
@@ -198,12 +217,33 @@ public class ServerPacketHandler extends MSCPacketHandler{
 		Class entityClass = config.getEntityClass(packet.entity);
 		EnumCreatureType type = config.getTypeMap().get(entityClass);
 		config.getSpawnMap().setEntitySettings(config, entityClass, type, packet.entries);
+		
+		config.save();
+		config.getSpawnMap().evaluate();
+		MobSpawnControls.instance.getConfig().sync();
 	}
 
 	@Override
 	public void handleBiomeSetting(BiomeSettingPacket packet, Player player) {
-		// TODO Auto-generated method stub
+		ModConfig config = MobSpawnControls.instance.getConfig().getModConfig(packet.mod);
+		BiomeGenBase biome = (packet.biome.equalsIgnoreCase("master")) ? null : BiomeNameHelper.getBiome(packet.biome);
+		BiomeGroup group = (biome == null && !packet.biome.equalsIgnoreCase("master")) ? config.getBiomeGroup(packet.biome) : null;
+		SpawnMap map = config.getSpawnMap();
 		
+		for (EnumCreatureType type : EnumCreatureType.values()) {
+			List<SpawnListEntry> spawnList = new ArrayList<SpawnListEntry>();
+			EntityEntry[] entries = packet.entries[type.ordinal()];
+			for (EntityEntry e : entries)
+				spawnList.add(new SpawnListEntry(config.getEntityClass(e.entity), e.weight, e.min, e.max));
+			if (group != null)
+				map.setGroupSection(group, type, spawnList);
+			else
+				map.setBiomeSection(biome, type, spawnList);
+		}
+		
+		config.save();
+		config.getSpawnMap().evaluate();
+		MobSpawnControls.instance.getConfig().sync();
 	}
 
 	

@@ -11,6 +11,7 @@ import com.google.common.primitives.Bytes;
 import com.google.common.primitives.UnsignedBytes;
 import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.network.MSCPacketHandler;
+import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
 import com.mcf.davidee.msc.packet.settings.EvaluatedBiomePacket;
 import com.mcf.davidee.msc.packet.settings.EvaluatedGroupPacket;
@@ -37,6 +38,7 @@ public abstract class MSCPacket {
 		GROUPS(GroupsPacket.class),
 		CREATURE_TYPE(CreatureTypePacket.class),
 		BIOME_LIST(BiomeListPacket.class),
+		BIOME_SETTING(BiomeSettingPacket.class),
 		ENTITY_LIST(EntityListPacket.class),
 		ENTITY_SETTING(EntitySettingPacket.class),
 		SETTINGS(SettingsPacket.class),
