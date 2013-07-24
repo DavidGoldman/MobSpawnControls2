@@ -21,12 +21,7 @@ public class Container {
 	protected Scrollbar scrollbar;
 	protected Widget lastSelected;
 
-	public Container(int x, int y, int width, int height, Scrollbar scrollbar,
-			int shiftAmount, int extraScrollHeight) {
-		this.left = x;
-		this.right = x + width;
-		this.top = y;
-		this.bottom = y + height;
+	public Container(Scrollbar scrollbar, int shiftAmount, int extraScrollHeight) {
 		this.scrollbar = scrollbar;
 		this.shiftAmount = shiftAmount;
 		this.extraScrollHeight = extraScrollHeight;
@@ -38,8 +33,8 @@ public class Container {
 			scrollbar.setContainer(this);
 	}
 
-	public Container(int x, int y, int width, int height) {
-		this(x, y, width, height, null, 0, 0);
+	public Container() {
+		this(null, 0, 0);
 	}
 
 	public void revalidate(int x, int y, int width, int height) {

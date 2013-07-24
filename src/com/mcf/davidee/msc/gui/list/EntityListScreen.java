@@ -78,7 +78,7 @@ public class EntityListScreen extends MSCScreen{
 
 	@Override
 	protected void createGui() {
-		masterContainer = new Container(0, 0, width, height);
+		masterContainer = new Container();
 		title = new Label(packet.mod + " Controls");
 		subTitle = new Label("By Entity");
 		close = new ButtonVanilla(50, 20, "Back", new CloseHandler());
@@ -93,7 +93,7 @@ public class EntityListScreen extends MSCScreen{
 		masterContainer.addWidgets(monster, creature, ambient, water, title, subTitle, select, close);
 		
 		scrollbar = new ScrollbarVanilla(10,115);
-		labelContainer = new Container(width/2-70,height/4+15,150,115, scrollbar,14,4);
+		labelContainer = new Container(scrollbar,14,4);
 		
 		containers.add(labelContainer);
 		containers.add(masterContainer);

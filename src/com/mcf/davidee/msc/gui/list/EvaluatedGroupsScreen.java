@@ -57,7 +57,7 @@ public class EvaluatedGroupsScreen extends MSCScreen {
 
 	@Override
 	protected void createGui() {
-		masterContainer = new Container(0, 0, width, height);
+		masterContainer = new Container();
 		title = new Label(packet.mod + " Controls");
 		subTitle = new Label("Evaluated Group \"" + packet.group + "\"");
 		close = new ButtonVanilla(100, 20, "Back", new CloseHandler());
@@ -65,7 +65,7 @@ public class EvaluatedGroupsScreen extends MSCScreen {
 		masterContainer.addWidgets(title, subTitle, close);
 		
 		scrollbar = new ScrollbarVanilla(10, 143);
-		labelContainer = new FocusedContainer(width/2-70, height/4-14, 150, 143, scrollbar, 14, 4);
+		labelContainer = new FocusedContainer(scrollbar, 14, 4);
 		FocusableLabel[] labels = new FocusableLabel[packet.biomes.length];
 		for (int i = 0; i < labels.length; ++i)
 			labels[i] = new FocusableLabel(packet.biomes[i]);

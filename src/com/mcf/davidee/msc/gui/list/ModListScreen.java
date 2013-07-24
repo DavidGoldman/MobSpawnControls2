@@ -73,8 +73,8 @@ public class ModListScreen extends MSCScreen{
 			labels[i] = new FocusableLabel(packet.mods[i]);
 
 		scrollbar = new ScrollbarVanilla(10,100);
-		labelContainer = new FocusedContainer(width/2-50,height/4-7,110,100, scrollbar,14,4);
-		masterContainer = new Container(0,0,width,height);
+		labelContainer = new FocusedContainer(scrollbar, 14, 4);
+		masterContainer = new Container();
 		masterContainer.addWidgets(title, controls, groups, types, close);
 		labelContainer.addWidgets(labels);
 		containers.add(labelContainer);

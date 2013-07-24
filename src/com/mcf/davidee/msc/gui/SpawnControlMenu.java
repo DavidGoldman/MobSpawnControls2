@@ -71,7 +71,7 @@ public class SpawnControlMenu extends MSCScreen{
 
 		title = new Label(mod + " Spawn Controls");
 
-		container = new Container(0,0,width,height);
+		container = new Container();
 		container.addWidgets(close, master, biomes, entities, eval, title);
 		containers.add(container);
 	}

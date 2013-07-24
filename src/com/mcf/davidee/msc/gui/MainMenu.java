@@ -34,7 +34,7 @@ public class MainMenu extends MSCScreen{
 
 		title = new Label("Mob Spawn Controls",new Tooltip(MobSpawnControls.version));
 
-		container = new Container(0,0,width,height);
+		container = new Container();
 		container.addWidgets(close, mods, settings, debug, title);
 		containers.add(container);
 		

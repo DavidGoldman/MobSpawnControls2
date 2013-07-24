@@ -23,7 +23,7 @@ public class AccessDeniedScreen extends MSCScreen {
 		message = new Label("You do not have permission to use MSC", new Tooltip("Try contacting a Server OP"));
 		close = new ButtonVanilla("Close",new CloseHandler());
 
-		container = new Container(0,0,width,height);
+		container = new Container();
 		container.addWidgets(title,message,close);
 		containers.add(container);
 	}

@@ -51,7 +51,7 @@ public class PopupYesNo extends MSCPopup{
 
 	@Override
 	protected void createGui() {
-		container = new Container(0,0,width,height);
+		container = new Container();
 		ButtonHandler h = new YesNoButtonHandler();
 		yes = new ButtonVanilla(50,20,yesText,h);
 		no = new ButtonVanilla(50,20,noText,h);

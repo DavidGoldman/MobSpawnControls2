@@ -83,7 +83,7 @@ public class SettingsScreen extends MSCScreen {
 		amb = new IntSlider(100,20,"Ambient %d",packet.caps[2],1,200);
 		wat = new IntSlider(100,20,"Water %d",packet.caps[3],1,200);
 		
-		container = new Container(0,0,width,height);
+		container = new Container();
 		container.addWidgets(close, save, mon, cre, amb, wat, readOnly, masterEnabled, creatureFreq, freqLabel, title, cap);
 		containers.add(container);
 		selected = container;

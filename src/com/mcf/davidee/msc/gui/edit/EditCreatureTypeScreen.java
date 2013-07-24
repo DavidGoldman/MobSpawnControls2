@@ -105,7 +105,7 @@ public class EditCreatureTypeScreen extends MSCScreen{
 		move.setEnabled(packet.mobs.length > 0);
 		close = new ButtonVanilla(50,20,"Cancel",new CloseHandler());
 		
-		masterContainer = new Container(0,0,width,height);
+		masterContainer = new Container();
 		masterContainer.addWidgets(title, arrow, move, save, close);
 		
 		FocusableLabel[] labels = new FocusableLabel[packet.mobs.length];
@@ -113,7 +113,7 @@ public class EditCreatureTypeScreen extends MSCScreen{
 			labels[i] = new FocusableLabel(packet.mobs[i]);
 		
 		scrollbar = new ScrollbarVanilla(15,142);
-		labelContainer = new FocusedContainer(width/2-90,height/4-25,135,142, scrollbar, 14, 4);
+		labelContainer = new FocusedContainer(scrollbar, 14, 4);
 		labelContainer.addWidgets(labels);
 		
 		
@@ -124,7 +124,7 @@ public class EditCreatureTypeScreen extends MSCScreen{
 		for (int i = 0; i < creatureLabels.length; ++i)
 			creatureLabels[i] = new FocusableLabel(creatureNames[i]);
 		
-		creatureContainer = new FocusedContainer(width/2+80,height/4+25,80,58);
+		creatureContainer = new FocusedContainer();
 		creatureContainer.addWidgets(creatureLabels);
 		
 		containers.add(labelContainer);

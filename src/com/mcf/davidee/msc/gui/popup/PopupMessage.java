@@ -24,7 +24,7 @@ public class PopupMessage extends MSCPopup {
 
 	@Override
 	protected void createGui() {
-		container = new Container(0, 0, width, height);
+		container = new Container();
 		ok = new ButtonVanilla(50, 20, bText, new CloseHandler());
 		container.addWidgets(ok);
 

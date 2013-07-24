@@ -53,8 +53,8 @@ public abstract class BasicScreen extends GuiScreen {
 	public void drawScreen(int mx, int my, float f) {
 		drawBackground();
 		List<Widget> overlays = new ArrayList<Widget>();
-		for (int i = containers.size() - 1; i >=0; --i) //Index of 0 means top most
-			overlays.addAll(containers.get(i).draw(mx,my));
+		for (Container c : containers)
+			overlays.addAll(c.draw(mx, my));
 		for (Widget w : overlays)
 			w.draw(mx, my);
 	}

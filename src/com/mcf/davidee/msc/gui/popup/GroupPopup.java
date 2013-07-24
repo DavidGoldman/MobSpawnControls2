@@ -42,7 +42,7 @@ public class GroupPopup extends MSCPopup {
 	
 	private boolean validInput() {
 		String text = nameField.getText();
-		if (Strings.isNullOrEmpty(text)|| !add && name.equalsIgnoreCase(text))
+		if (Strings.isNullOrEmpty(text) || text.equalsIgnoreCase("master") || !add && name.equalsIgnoreCase(text))
 			return false;
 		for (String s : groups)
 			if (s.equalsIgnoreCase(text))
@@ -72,7 +72,7 @@ public class GroupPopup extends MSCPopup {
 
 	@Override
 	protected void createGui() {
-		container = new Container(0, 0, width, height);
+		container = new Container();
 
 		title = new Label((add) ? "Add Group" : "Rename Group", 0, 0);
 		group = new Label("Group Name", 0, 0);

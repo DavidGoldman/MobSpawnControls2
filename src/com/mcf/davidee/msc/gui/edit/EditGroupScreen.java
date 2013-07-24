@@ -85,7 +85,7 @@ public class EditGroupScreen extends MSCScreen{
 
 	@Override
 	protected void createGui() {
-		master = new Container(0, 0, width, height);
+		master = new Container();
 		title = new Label("Group \"" + groupName + "\"");
 		gLabel = new Label("Group Definition");
 		bLabel = new Label("Unused Biomes/Groups");
@@ -102,10 +102,10 @@ public class EditGroupScreen extends MSCScreen{
 		master.addWidgets(title, gLabel, bLabel, left, right, add, subtract, inspect, remove, save, close);
 
 		groupBar = new ScrollbarVanilla(10, 156);
-		group = new Container(width/2-210,height/4-10,160,156, groupBar, 14, 4);
+		group = new Container(groupBar, 14, 4);
 
 		biomeBar = new ScrollbarVanilla(10, 156);
-		biomes = new Container(width/2+50,height/4-10,160,156, biomeBar, 14, 4);
+		biomes = new Container(biomeBar, 14, 4);
 
 		if (!groupDef.isEmpty()) {
 			String[] arr = groupDef.split(",");

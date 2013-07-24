@@ -10,6 +10,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.SpawnListEntry;
 
 import com.mcf.davidee.msc.BiomeNameHelper;
+import com.mcf.davidee.msc.MSCLogFormatter;
 import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.config.ModConfig;
 import com.mcf.davidee.msc.config.SpawnSettings;
@@ -94,12 +95,16 @@ public class ServerPacketHandler extends MSCPacketHandler{
 			handleEvaluatedGroupRequest(dat, player);
 			break;
 		case DEBUG:
-			//TODO
-			PacketDispatcher.sendPacketToPlayer(MSCPacket.getPacket(PacketType.DEBUG), player);
+			handleDebugRequest(player);
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void handleDebugRequest(Player player) {
+		String[] log = MSCLogFormatter.log.toArray(new String[0]);
+		PacketDispatcher.sendPacketToPlayer(MSCPacket.getPacket(PacketType.DEBUG, (Object)log), player);
 	}
 
 	private void handleEvaluatedBiomeRequest(String data, Player player) {

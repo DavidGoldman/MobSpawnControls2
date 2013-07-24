@@ -69,7 +69,7 @@ public class BiomeListScreen extends MSCScreen{
 
 	@Override
 	protected void createGui() {
-		masterContainer = new Container(0, 0, width, height);
+		masterContainer = new Container();
 		title = new Label(packet.mod + " Controls");
 		subTitle = new Label((packet.evalRequest ? "Evaluated Biomes" : "By Biome"));
 		
@@ -84,7 +84,7 @@ public class BiomeListScreen extends MSCScreen{
 		masterContainer.addWidgets(title, subTitle, biomes, groups, select, close);
 
 		scrollbar = new ScrollbarVanilla(10, 143);
-		labelContainer = new FocusedContainer(width/2-70, height/4-10, 150, 143, scrollbar, 14, 4);
+		labelContainer = new FocusedContainer(scrollbar, 14, 4);
 		FocusableLabel[] labels = new FocusableLabel[packet.biomes.length];
 		for (int i = 0; i < labels.length; ++i)
 			labels[i] = new FocusableLabel(packet.biomes[i]);

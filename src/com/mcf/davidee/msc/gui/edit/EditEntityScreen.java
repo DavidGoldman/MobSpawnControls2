@@ -132,7 +132,7 @@ public class EditEntityScreen extends MSCScreen{
 	protected void createGui() {
 		BiomeEntry[] arr = packet.getOrderedEntries();
 		
-		masterContainer = new Container(0, 0, width, height);
+		masterContainer = new Container();
 		title = new Label(packet.mod + " Controls");
 		subTitle = new Label(packet.entity);
 		close = new ButtonVanilla(50, 20, "Cancel", new CloseHandler());
@@ -147,7 +147,7 @@ public class EditEntityScreen extends MSCScreen{
 		masterContainer.addWidgets(title, subTitle, enabled, weight, min, max, save, close);
 		
 		scrollbar = new ScrollbarVanilla(10,143);
-		labelContainer = new FocusedContainer(width/2-120,height/4-13,150,143, scrollbar,14,4);
+		labelContainer = new FocusedContainer(scrollbar,14,4);
 		
 		FocusableLabel[] labels = new FocusableLabel[arr.length];
 		for (int i = 0; i < labels.length; ++i) {

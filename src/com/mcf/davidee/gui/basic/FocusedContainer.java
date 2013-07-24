@@ -7,13 +7,13 @@ import com.mcf.davidee.gui.focusable.FocusableWidget;
 
 public class FocusedContainer extends Container {
 
-	public FocusedContainer(int x, int y, int width, int height) {
-		super(x, y, width, height);
+	public FocusedContainer() {
+		super();
 
 	}
 
-	public FocusedContainer(int x, int y, int width, int height, Scrollbar scrollbar, int shiftAmount, int extraScrollHeight) {
-		super(x, y, width, height, scrollbar, shiftAmount, extraScrollHeight);
+	public FocusedContainer(Scrollbar scrollbar, int shiftAmount, int extraScrollHeight) {
+		super(scrollbar, shiftAmount, extraScrollHeight);
 
 	}
 

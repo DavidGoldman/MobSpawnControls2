@@ -35,7 +35,7 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod( modid = "MSC2", name="Mob Spawn Controls 2", dependencies = "after:*", version="b2.5.3")
+@Mod( modid = "MSC2", name="Mob Spawn Controls 2", dependencies = "after:*", version="b2.5.4")
 @NetworkMod(
 		clientSideRequired = false,
 		serverSideRequired = false,
@@ -82,7 +82,7 @@ public class MobSpawnControls{
 			File logfile = new File(proxy.getMinecraftDirectory(),"MobSpawnControls.log");
 			if ((logfile.exists() || logfile.createNewFile()) && logfile.canWrite() && logHandler == null)	{
 				logHandler = new FileHandler(logfile.getPath());
-				logHandler.setFormatter(new LogFormatter());
+				logHandler.setFormatter(new MSCLogFormatter());
 				logger.addHandler(logHandler);
 			}
 		} catch (SecurityException e) {
@@ -124,6 +124,7 @@ public class MobSpawnControls{
 	@EventHandler 
 	public void serverStopping(FMLServerStoppingEvent event) {
 		logger.info("Unloading spawn configuration");
+		MSCLogFormatter.log.clear();
 		config = null;
 	}
 

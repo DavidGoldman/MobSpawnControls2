@@ -66,7 +66,7 @@ public class MobTypesMenu extends MSCScreen{
 
 		title = new Label(mod + " Mob Types", new Tooltip("Select a Mob Type"));
 
-		container = new Container(0,0,width,height);
+		container = new Container();
 		container.addWidgets(close, monster, creature, ambient, water, none, title);
 		containers.add(container);
 	}

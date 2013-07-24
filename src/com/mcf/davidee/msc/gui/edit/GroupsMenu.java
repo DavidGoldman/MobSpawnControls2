@@ -107,7 +107,7 @@ public class GroupsMenu extends MSCScreen{
 		setEnabled(packet.groups.length > 0, remove, rename, edit);
 
 		scrollbar = new ScrollbarVanilla(10,128);
-		labelContainer = new FocusedContainer(width/2-70,height/4-7,150,128, scrollbar,14,4);
+		labelContainer = new FocusedContainer(scrollbar,14,4);
 
 		FocusableLabel[] labels = new FocusableLabel[packet.groups.length];
 		for (int i = 0; i < labels.length; ++i){
@@ -120,7 +120,7 @@ public class GroupsMenu extends MSCScreen{
 		}
 		labelContainer.addWidgets(labels);
 
-		masterContainer = new Container(0,0,width,height);
+		masterContainer = new Container();
 		masterContainer.addWidgets(title, add, remove, rename, edit, save, close);
 		containers.add(labelContainer);
 		containers.add(masterContainer);
