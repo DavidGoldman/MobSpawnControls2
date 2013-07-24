@@ -5,16 +5,21 @@ import com.mcf.davidee.gui.Scrollbar;
 import com.mcf.davidee.gui.Widget;
 import com.mcf.davidee.gui.focusable.FocusableWidget;
 
+/**
+ * 
+ * A "Focused" version of a Container.
+ * This container will always have a focused widget
+ * as long as there is a focusable widget contained.
+ *
+ */
 public class FocusedContainer extends Container {
 
 	public FocusedContainer() {
 		super();
-
 	}
 
 	public FocusedContainer(Scrollbar scrollbar, int shiftAmount, int extraScrollHeight) {
 		super(scrollbar, shiftAmount, extraScrollHeight);
-
 	}
 
 	@Override

@@ -86,7 +86,7 @@ public class SettingsScreen extends MSCScreen {
 		container = new Container();
 		container.addWidgets(close, save, mon, cre, amb, wat, readOnly, masterEnabled, creatureFreq, freqLabel, title, cap);
 		containers.add(container);
-		selected = container;
+		selectedContainer = container;
 	}
 
 	private void save() {

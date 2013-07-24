@@ -7,6 +7,11 @@ import org.lwjgl.opengl.GL11;
 
 import com.mcf.davidee.gui.Checkbox;
 
+/**
+ * 
+ * Default style checkbox.
+ *
+ */
 public class CheckboxVanilla extends Checkbox {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation("msc2", "textures/gui/checkbox.png");

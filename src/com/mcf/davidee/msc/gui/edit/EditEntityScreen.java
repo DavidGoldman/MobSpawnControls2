@@ -165,7 +165,7 @@ public class EditEntityScreen extends MSCScreen{
 		containers.add(labelContainer);
 		containers.add(masterContainer);
 		
-		selected = labelContainer;
+		selectedContainer = labelContainer;
 	}
 	
 	@Override

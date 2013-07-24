@@ -1,5 +1,10 @@
 package com.mcf.davidee.gui;
 
+/**
+ * 
+ * Abstract representation of a checkbox.
+ *
+ */
 public abstract class Checkbox extends Widget {
 
 	protected String str;

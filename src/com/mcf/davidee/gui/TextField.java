@@ -10,10 +10,14 @@ import org.lwjgl.opengl.GL11;
 import com.mcf.davidee.gui.Scrollbar.Shiftable;
 import com.mcf.davidee.gui.focusable.FocusableWidget;
 
-/*
- * Copy of the vanilla TextField class in Widget form
+/**
+ * 
+ * Abstract representation of a minecraft textfield.
+ * This is pretty much a copy of the vanilla textfield, 
+ * so it support highlighting/copying/pasting text.
+ *
  */
-public abstract class TextField extends FocusableWidget implements Shiftable {
+public abstract class TextField extends FocusableWidget {
 
 	public interface CharacterFilter {
 		public String filter(String s);
@@ -41,7 +45,7 @@ public abstract class TextField extends FocusableWidget implements Shiftable {
 
 	protected abstract int getDrawY();
 
-	public abstract int getWidth();
+	public abstract int getInternalWidth();
 
 	protected abstract void drawBackground();
 
@@ -52,7 +56,7 @@ public abstract class TextField extends FocusableWidget implements Shiftable {
 		int j = cursorPosition - charOffset;
 		int k = selectionEnd - charOffset;
 		String s = mc.fontRenderer.trimStringToWidth(
-				text.substring(charOffset), getWidth());
+				text.substring(charOffset), getInternalWidth());
 		boolean flag = j >= 0 && j <= s.length();
 		boolean cursor = focused && this.cursorCounter / 6 % 2 == 0 && flag;
 		int l = getDrawX();
@@ -129,7 +133,7 @@ public abstract class TextField extends FocusableWidget implements Shiftable {
 	@Override
 	public void handleClick(int mx, int my) {
 		int pos = mx - x;
-		pos -= Math.abs(getWidth() - width) / 2;
+		pos -= Math.abs(getInternalWidth() - width) / 2;
 
 		String s = mc.fontRenderer.trimStringToWidth(
 				text.substring(charOffset), getWidth());
@@ -140,11 +144,6 @@ public abstract class TextField extends FocusableWidget implements Shiftable {
 	@Override
 	public void update() {
 		++cursorCounter;
-	}
-
-	@Override
-	public void shiftY(int dy) {
-		y += dy;
 	}
 
 	@Override
@@ -250,14 +249,12 @@ public abstract class TextField extends FocusableWidget implements Shiftable {
 		if (charOffset > index)
 			charOffset = index;
 
-		int width = this.getWidth();
-		String s = mc.fontRenderer.trimStringToWidth(
-				text.substring(charOffset), width);
+		int width = this.getInternalWidth();
+		String s = mc.fontRenderer.trimStringToWidth(text.substring(charOffset), width);
 		int pos = s.length() + charOffset;
 
 		if (index == charOffset)
-			charOffset -= mc.fontRenderer.trimStringToWidth(this.text, width,
-					true).length();
+			charOffset -= mc.fontRenderer.trimStringToWidth(this.text, width, true).length();
 		if (index > pos)
 			charOffset += index - 1;
 		else if (index <= charOffset)

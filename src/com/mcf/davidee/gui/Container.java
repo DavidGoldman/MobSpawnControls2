@@ -150,8 +150,7 @@ public class Container {
 			if (focusList.size() == 0)
 				focusIndex = -1;
 			else {
-				focusIndex = MathHelper.clamp_int(focusIndex, 0,
-						focusList.size() - 1);
+				focusIndex = MathHelper.clamp_int(focusIndex, 0, focusList.size() - 1);
 				focusList.get(focusIndex).focusGained();
 			}
 
@@ -263,8 +262,7 @@ public class Container {
 			if (focusIndex != -1)
 				done = focusList.get(focusIndex).mouseWheel(delta);
 			else
-				for (Iterator<Widget> it = widgets.iterator(); it.hasNext()
-						&& !done;)
+				for (Iterator<Widget> it = widgets.iterator(); it.hasNext() && !done;)
 					done = it.next().mouseWheel(delta);
 		}
 	}

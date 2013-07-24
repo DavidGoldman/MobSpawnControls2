@@ -5,11 +5,9 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 
-import com.mcf.davidee.gui.Scrollbar;
 import com.mcf.davidee.gui.Widget;
-import com.mcf.davidee.gui.Scrollbar.Shiftable;
 
-public class Label extends Widget implements Shiftable {
+public class Label extends Widget {
 
 	private String str;
 	private int color, hoverColor;
@@ -105,11 +103,6 @@ public class Label extends Widget implements Shiftable {
 	public void setPosition(int x, int y) {
 		this.x = (center) ? x - width / 2 : x;
 		this.y = y;
-	}
-
-	@Override
-	public void shiftY(int dy) {
-		this.y += dy;
 	}
 
 }

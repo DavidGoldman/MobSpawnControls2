@@ -15,20 +15,38 @@ import com.mcf.davidee.gui.Button.ButtonHandler;
 import com.mcf.davidee.gui.Container;
 import com.mcf.davidee.gui.Widget;
 
+/**
+ * 
+ * The core GuiScreen - use this class for your GUIs.
+ *
+ */
 public abstract class BasicScreen extends GuiScreen {
 
 	private GuiScreen parent;
 	private boolean hasInit, closed;
 	protected List<Container> containers;
-	protected Container selected;
+	protected Container selectedContainer;
 
 	public BasicScreen(GuiScreen parent) {
 		this.parent = parent;
 		this.containers = new ArrayList<Container>();
 	}
 
+	/**
+	 * Revalidate this GUI.
+	 * Reset your widget locations/dimensions here.
+	 */
 	protected abstract void revalidateGui();
+	
+	/**
+	 * Called ONCE to create this GUI.
+	 * Create your containers and widgets here.
+	 */
 	protected abstract void createGui();
+	
+	/**
+	 * Called when this GUI is reopened after being closed.
+	 */
 	protected abstract void reopenedGui();
 
 	public GuiScreen getParent() {
@@ -43,12 +61,22 @@ public abstract class BasicScreen extends GuiScreen {
 		mc.displayGuiScreen(parent);
 	}
 
+	/**
+	 * Called when the selected container did not capture this keyboard event.
+	 * 
+	 * @param c Character typed (if any)
+	 * @param code Keyboard.KEY_ code for this key
+	 */
 	protected void unhandledKeyTyped(char c, int code) { }
 
+	/**
+	 * Called to draw this screen's background
+	 */
 	protected void drawBackground() {
 		drawDefaultBackground();
 	}
 
+	
 	@Override
 	public void drawScreen(int mx, int my, float f) {
 		drawBackground();
@@ -70,12 +98,12 @@ public abstract class BasicScreen extends GuiScreen {
 		if (code == 0){
 			for (Container c : containers){
 				if (c.mouseClicked(mx, my)){
-					selected = c;
+					selectedContainer = c;
 					break;
 				}
 			}
 			for (Container c : containers)
-				if (c != selected)
+				if (c != selectedContainer)
 					c.setFocused(null);
 		}
 	}
@@ -92,13 +120,13 @@ public abstract class BasicScreen extends GuiScreen {
 	public void handleMouseInput() {
 		super.handleMouseInput();
 		int delta = Mouse.getEventDWheel();
-		if (delta != 0 && selected != null)
-			selected.mouseWheel(MathHelper.clamp_int(delta,-5,5));
+		if (delta != 0 && selectedContainer != null)
+			selectedContainer.mouseWheel(MathHelper.clamp_int(delta,-5,5));
 	}
 
 	@Override
 	public void keyTyped(char c, int code) {
-		boolean handled = (selected != null) ? selected.keyTyped(c, code) : false;
+		boolean handled = (selectedContainer != null) ? selectedContainer.keyTyped(c, code) : false;
 		if (!handled)
 			unhandledKeyTyped(c,code);
 	}
@@ -106,6 +134,7 @@ public abstract class BasicScreen extends GuiScreen {
 	@Override
 	public void initGui() {
 		Keyboard.enableRepeatEvents(true);
+		
 		if (!hasInit){
 			createGui();
 			hasInit = true;
@@ -117,8 +146,8 @@ public abstract class BasicScreen extends GuiScreen {
 		}
 	}
 
-	public void drawCenteredStringNoShadow(FontRenderer ft, String str, int cx, int y, int c) {
-		ft.drawString(str, cx - ft.getStringWidth(str) / 2, y, c);
+	public void drawCenteredStringNoShadow(FontRenderer ft, String str, int cx, int y, int color) {
+		ft.drawString(str, cx - ft.getStringWidth(str) / 2, y, color);
 	}
 
 

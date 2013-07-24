@@ -7,6 +7,11 @@ import org.lwjgl.opengl.GL11;
 
 import com.mcf.davidee.gui.Slider;
 
+/**
+ * 
+ * Vanilla GuiSlider in Widget form.
+ *
+ */
 public class SliderVanilla extends Slider {
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/widgets.png");

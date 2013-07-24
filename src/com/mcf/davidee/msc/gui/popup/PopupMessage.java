@@ -36,7 +36,7 @@ public class PopupMessage extends MSCPopup {
 		container.addWidgets(labels);
 
 		containers.add(container);
-		selected = container;
+		selectedContainer = container;
 	}
 
 	@Override

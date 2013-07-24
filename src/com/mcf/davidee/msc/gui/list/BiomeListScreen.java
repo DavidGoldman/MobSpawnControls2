@@ -93,7 +93,7 @@ public class BiomeListScreen extends MSCScreen{
 		containers.add(labelContainer);
 		containers.add(masterContainer);
 
-		selected = labelContainer;
+		selectedContainer = labelContainer;
 	}
 
 	public void buttonClicked(Button button) {

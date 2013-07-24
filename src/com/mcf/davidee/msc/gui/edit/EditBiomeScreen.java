@@ -10,9 +10,9 @@ import static com.mcf.davidee.msc.gui.edit.EditEntityScreen.ENABLED_HOVER;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.gui.GuiScreen;
+
+import org.lwjgl.input.Keyboard;
 
 import com.mcf.davidee.gui.Button;
 import com.mcf.davidee.gui.Checkbox;
@@ -20,7 +20,6 @@ import com.mcf.davidee.gui.Container;
 import com.mcf.davidee.gui.Scrollbar;
 import com.mcf.davidee.gui.basic.FocusedContainer;
 import com.mcf.davidee.gui.basic.Label;
-import com.mcf.davidee.gui.basic.BasicScreen.CloseHandler;
 import com.mcf.davidee.gui.focusable.FocusableLabel;
 import com.mcf.davidee.gui.focusable.FocusableWidget;
 import com.mcf.davidee.gui.vanilla.ButtonVanilla;
@@ -32,12 +31,10 @@ import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket.EntityEntry;
-import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
 import com.mcf.davidee.msc.spawning.MobHelper;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-//TODO
 public class EditBiomeScreen extends MSCScreen {
 
 	private Label title, subTitle;
@@ -193,7 +190,7 @@ public class EditBiomeScreen extends MSCScreen {
 		if (labelContainer.hasFocusedWidget())
 			updateGuiSettings();
 
-		selected = labelContainer;
+		selectedContainer = labelContainer;
 	}
 
 

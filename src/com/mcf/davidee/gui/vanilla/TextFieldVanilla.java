@@ -4,6 +4,11 @@ import net.minecraft.util.ChatAllowedCharacters;
 
 import com.mcf.davidee.gui.TextField;
 
+/**
+ * 
+ * Vanilla GuiTextField in Widget form.
+ *
+ */
 public class TextFieldVanilla extends TextField {
 
 	private int outerColor, innerColor;
@@ -45,7 +50,7 @@ public class TextFieldVanilla extends TextField {
 	}
 
 	@Override
-	public int getWidth() {
+	public int getInternalWidth() {
 		return width - 8;
 	}
 

@@ -72,7 +72,7 @@ public class DebugScreen extends MSCScreen{
 		containers.add(logContainer);
 		containers.add(container);
 		
-		selected = logContainer;
+		selectedContainer = logContainer;
 	}
 
 }

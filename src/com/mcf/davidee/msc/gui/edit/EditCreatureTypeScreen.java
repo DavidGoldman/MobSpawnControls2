@@ -130,7 +130,7 @@ public class EditCreatureTypeScreen extends MSCScreen{
 		containers.add(labelContainer);
 		containers.add(creatureContainer);
 		containers.add(masterContainer);
-		selected = labelContainer;
+		selectedContainer = labelContainer;
 	}
 
 }

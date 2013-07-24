@@ -38,7 +38,7 @@ public class MainMenu extends MSCScreen{
 		container.addWidgets(close, mods, settings, debug, title);
 		containers.add(container);
 		
-		selected = container;
+		selectedContainer = container;
 	}
 
 	@Override

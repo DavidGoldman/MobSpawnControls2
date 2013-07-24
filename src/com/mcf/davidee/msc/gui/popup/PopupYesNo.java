@@ -65,7 +65,7 @@ public class PopupYesNo extends MSCPopup{
 		container.addWidgets(labels);
 
 		containers.add(container);
-		selected = container;
+		selectedContainer = container;
 	}
 
 	private class YesNoButtonHandler implements ButtonHandler{

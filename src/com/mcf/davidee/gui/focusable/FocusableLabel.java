@@ -8,6 +8,11 @@ import net.minecraft.client.Minecraft;
 import com.mcf.davidee.gui.Widget;
 import com.mcf.davidee.gui.Scrollbar.Shiftable;
 
+/**
+ * 
+ * A simple focusable label.
+ *
+ */
 public class FocusableLabel extends FocusableWidget implements Shiftable {
 
 	private String str;

@@ -3,6 +3,11 @@ package com.mcf.davidee.gui.vanilla;
 import com.mcf.davidee.gui.Scrollbar;
 import com.mcf.davidee.gui.Widget;
 
+/**
+ * 
+ * Default style scrollbar.
+ *
+ */
 public class ScrollbarVanilla extends Scrollbar {
 
 	public ScrollbarVanilla(int width, int height) {

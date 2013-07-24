@@ -110,7 +110,7 @@ public class GroupPopup extends MSCPopup {
 		container.addWidgets(title, group, nameField, submit, close);
 
 		containers.add(container);
-		selected = container;
+		selectedContainer = container;
 	}
 
 }

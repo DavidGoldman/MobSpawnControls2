@@ -2,6 +2,12 @@ package com.mcf.davidee.gui.focusable;
 
 import com.mcf.davidee.gui.Widget;
 
+/**
+ * 
+ * A FocusableLabel that is meant to display different text
+ * than what it really means in the background.
+ *
+ */
 public class FocusableSpecialLabel extends FocusableLabel {
 
 	private String actualText;

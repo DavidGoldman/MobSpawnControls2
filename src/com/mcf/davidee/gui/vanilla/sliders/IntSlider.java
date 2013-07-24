@@ -5,6 +5,11 @@ import net.minecraft.util.MathHelper;
 import com.mcf.davidee.gui.Slider;
 import com.mcf.davidee.gui.vanilla.SliderVanilla;
 
+/**
+ * 
+ * A Vanilla-style Integer slider that supports the mouse wheel.
+ *
+ */
 public class IntSlider extends SliderVanilla {
 	
 	protected final int minVal, maxVal;

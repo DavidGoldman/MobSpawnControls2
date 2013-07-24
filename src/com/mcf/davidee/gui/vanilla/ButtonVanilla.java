@@ -6,6 +6,11 @@ import org.lwjgl.opengl.GL11;
 
 import com.mcf.davidee.gui.Button;
 
+/**
+ * 
+ * Vanilla GuiButton in Widget form.
+ *
+ */
 public class ButtonVanilla extends Button {
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/widgets.png");

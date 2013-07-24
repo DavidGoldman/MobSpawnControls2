@@ -2,6 +2,11 @@ package com.mcf.davidee.gui;
 
 import org.lwjgl.input.Mouse;
 
+/**
+ * 
+ * Abstract representation of a scrollbar.
+ *
+ */
 public abstract class Scrollbar extends Widget {
 
 	public interface Shiftable {

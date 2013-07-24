@@ -4,7 +4,12 @@ import net.minecraft.util.MathHelper;
 
 import com.mcf.davidee.gui.Scrollbar.Shiftable;
 
-public abstract class Slider extends Widget implements Shiftable {
+/**
+ * 
+ * Abstract representation of a minecraft slider.
+ *
+ */
+public abstract class Slider extends Widget {
 
 	public interface SliderFormat {
 		String format(Slider slider);
@@ -42,11 +47,6 @@ public abstract class Slider extends Widget implements Shiftable {
 	@Override
 	public void mouseReleased(int mx, int my) {
 		dragging = false;
-	}
-
-	@Override
-	public void shiftY(int dy) {
-		this.y += dy;
 	}
 
 	public float getValue() {

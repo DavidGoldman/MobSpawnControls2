@@ -2,7 +2,13 @@ package com.mcf.davidee.gui;
 
 import com.mcf.davidee.gui.Scrollbar.Shiftable;
 
-public abstract class Button extends Widget implements Shiftable {
+/**
+ * 
+ * Abstract representation of a minecraft button.
+ * The buttons calls handler.buttonClicked(this) when it is pressed.
+ *
+ */
+public abstract class Button extends Widget {
 
 	public interface ButtonHandler {
 		void buttonClicked(Button button);
@@ -20,12 +26,6 @@ public abstract class Button extends Widget implements Shiftable {
 	public boolean click(int mx, int my) {
 		return enabled && inBounds(mx, my);
 	}
-
-	@Override
-	public void shiftY(int dy) {
-		this.y += dy;
-	}
-	
 
 	@Override
 	public void handleClick(int mx, int my) {

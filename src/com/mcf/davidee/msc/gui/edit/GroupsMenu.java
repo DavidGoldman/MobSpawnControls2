@@ -124,7 +124,7 @@ public class GroupsMenu extends MSCScreen{
 		masterContainer.addWidgets(title, add, remove, rename, edit, save, close);
 		containers.add(labelContainer);
 		containers.add(masterContainer);
-		selected = labelContainer;
+		selectedContainer = labelContainer;
 	}
 
 	@Override

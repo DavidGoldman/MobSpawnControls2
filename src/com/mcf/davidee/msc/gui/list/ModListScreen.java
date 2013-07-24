@@ -79,7 +79,7 @@ public class ModListScreen extends MSCScreen{
 		labelContainer.addWidgets(labels);
 		containers.add(labelContainer);
 		containers.add(masterContainer);
-		selected = labelContainer;
+		selectedContainer = labelContainer;
 	}
 	
 	@Override
