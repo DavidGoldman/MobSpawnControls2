@@ -71,7 +71,7 @@ public class MobSpawnControls{
 		version = modMeta.version;
 		modMeta.credits = "Thanks to Mojang, Forge, and all your support.";
 		modMeta.description = "Allows you to control the vanilla spawning system.";
-		modMeta.url = "http://www.minecraftforum.net/topic/1553186-151/";
+		modMeta.url = "http://www.minecraftforum.net/topic/1909304-/";
 	}
 
 	@EventHandler 
