@@ -4,23 +4,17 @@ import java.util.List;
 
 import net.minecraft.client.gui.GuiScreen;
 
-import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Container;
-import com.mcf.davidee.gui.Scrollbar;
-import com.mcf.davidee.gui.basic.FocusedContainer;
-import com.mcf.davidee.gui.basic.Label;
-import com.mcf.davidee.gui.basic.BasicScreen.CloseHandler;
-import com.mcf.davidee.gui.focusable.FocusableLabel;
-import com.mcf.davidee.gui.focusable.FocusableWidget;
-import com.mcf.davidee.gui.vanilla.ButtonVanilla;
-import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.guilib.basic.Label;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Container;
+import com.mcf.davidee.guilib.core.Scrollbar;
+import com.mcf.davidee.guilib.focusable.FocusableLabel;
+import com.mcf.davidee.guilib.focusable.FocusableWidget;
+import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
+import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
 import com.mcf.davidee.msc.gui.MSCScreen;
-import com.mcf.davidee.msc.packet.MSCPacket;
-import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.settings.EvaluatedBiomePacket;
 import com.mcf.davidee.msc.spawning.MobHelper;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class EvaluatedBiomeScreen extends MSCScreen {
 
@@ -80,7 +74,7 @@ public class EvaluatedBiomeScreen extends MSCScreen {
 
 		masterContainer.addWidgets(monster, creature, ambient, water, title, subTitle, close);
 
-		scrollbar = new ScrollbarVanilla(10, 115);
+		scrollbar = new ScrollbarVanilla(10);
 		labelContainer = new Container(scrollbar, 14, 4);
 
 		containers.add(labelContainer);

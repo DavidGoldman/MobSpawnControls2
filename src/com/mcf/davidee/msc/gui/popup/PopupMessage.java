@@ -1,10 +1,10 @@
 package com.mcf.davidee.msc.gui.popup;
 
-import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Container;
-import com.mcf.davidee.gui.basic.BasicScreen;
-import com.mcf.davidee.gui.basic.Label;
-import com.mcf.davidee.gui.vanilla.ButtonVanilla;
+import com.mcf.davidee.guilib.basic.BasicScreen;
+import com.mcf.davidee.guilib.basic.Label;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Container;
+import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 
 public class PopupMessage extends MSCPopup {
 

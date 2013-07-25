@@ -3,22 +3,22 @@ package com.mcf.davidee.msc.gui.edit;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.gui.GuiScreen;
 
-import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Checkbox;
-import com.mcf.davidee.gui.Container;
-import com.mcf.davidee.gui.Scrollbar;
-import com.mcf.davidee.gui.basic.FocusedContainer;
-import com.mcf.davidee.gui.basic.Label;
-import com.mcf.davidee.gui.focusable.FocusableLabel;
-import com.mcf.davidee.gui.focusable.FocusableWidget;
-import com.mcf.davidee.gui.vanilla.ButtonVanilla;
-import com.mcf.davidee.gui.vanilla.CheckboxVanilla;
-import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
-import com.mcf.davidee.gui.vanilla.sliders.IntSlider;
+import org.lwjgl.input.Keyboard;
+
+import com.mcf.davidee.guilib.basic.FocusedContainer;
+import com.mcf.davidee.guilib.basic.Label;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Checkbox;
+import com.mcf.davidee.guilib.core.Container;
+import com.mcf.davidee.guilib.core.Scrollbar;
+import com.mcf.davidee.guilib.focusable.FocusableLabel;
+import com.mcf.davidee.guilib.focusable.FocusableWidget;
+import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
+import com.mcf.davidee.guilib.vanilla.CheckboxVanilla;
+import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.guilib.vanilla.sliders.IntSlider;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
@@ -146,7 +146,7 @@ public class EditEntityScreen extends MSCScreen{
 		
 		masterContainer.addWidgets(title, subTitle, enabled, weight, min, max, save, close);
 		
-		scrollbar = new ScrollbarVanilla(10,143);
+		scrollbar = new ScrollbarVanilla(10);
 		labelContainer = new FocusedContainer(scrollbar,14,4);
 		
 		FocusableLabel[] labels = new FocusableLabel[arr.length];

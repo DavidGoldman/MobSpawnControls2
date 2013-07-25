@@ -2,13 +2,11 @@ package com.mcf.davidee.msc.gui;
 
 import net.minecraft.client.gui.GuiScreen;
 
-import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Container;
-import com.mcf.davidee.gui.Button.ButtonHandler;
-import com.mcf.davidee.gui.basic.Label;
-import com.mcf.davidee.gui.basic.Tooltip;
-import com.mcf.davidee.gui.vanilla.ButtonVanilla;
-import com.mcf.davidee.msc.MobSpawnControls;
+import com.mcf.davidee.guilib.basic.Label;
+import com.mcf.davidee.guilib.basic.Tooltip;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Container;
+import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 

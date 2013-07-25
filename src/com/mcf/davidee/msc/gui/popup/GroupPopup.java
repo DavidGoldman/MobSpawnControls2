@@ -3,14 +3,15 @@ package com.mcf.davidee.msc.gui.popup;
 import java.util.Set;
 
 import com.google.common.base.Strings;
-import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Button.ButtonHandler;
-import com.mcf.davidee.gui.Container;
-import com.mcf.davidee.gui.TextField;
-import com.mcf.davidee.gui.TextField.CharacterFilter;
-import com.mcf.davidee.gui.basic.Label;
-import com.mcf.davidee.gui.vanilla.ButtonVanilla;
-import com.mcf.davidee.gui.vanilla.TextFieldVanilla;
+import com.mcf.davidee.guilib.basic.BasicScreen.CloseHandler;
+import com.mcf.davidee.guilib.basic.Label;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Button.ButtonHandler;
+import com.mcf.davidee.guilib.core.Container;
+import com.mcf.davidee.guilib.core.TextField;
+import com.mcf.davidee.guilib.core.TextField.CharacterFilter;
+import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
+import com.mcf.davidee.guilib.vanilla.TextFieldVanilla;
 import com.mcf.davidee.msc.gui.edit.GroupsMenu;
 
 public class GroupPopup extends MSCPopup {

@@ -2,16 +2,15 @@ package com.mcf.davidee.msc.gui.edit;
 
 import java.util.List;
 
-import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Button.ButtonHandler;
-import com.mcf.davidee.gui.Container;
-import com.mcf.davidee.gui.Scrollbar;
-import com.mcf.davidee.gui.basic.Label;
-import com.mcf.davidee.gui.focusable.FocusableLabel;
-import com.mcf.davidee.gui.focusable.FocusableSpecialLabel;
-import com.mcf.davidee.gui.focusable.FocusableWidget;
-import com.mcf.davidee.gui.vanilla.ButtonVanilla;
-import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.guilib.basic.Label;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Container;
+import com.mcf.davidee.guilib.core.Scrollbar;
+import com.mcf.davidee.guilib.focusable.FocusableLabel;
+import com.mcf.davidee.guilib.focusable.FocusableSpecialLabel;
+import com.mcf.davidee.guilib.focusable.FocusableWidget;
+import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
+import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.gui.popup.PopupMessage;
 
@@ -101,10 +100,10 @@ public class EditGroupScreen extends MSCScreen{
 		setEnabled(false, save, add, subtract, inspect, remove);
 		master.addWidgets(title, gLabel, bLabel, left, right, add, subtract, inspect, remove, save, close);
 
-		groupBar = new ScrollbarVanilla(10, 156);
+		groupBar = new ScrollbarVanilla(10);
 		group = new Container(groupBar, 14, 4);
 
-		biomeBar = new ScrollbarVanilla(10, 156);
+		biomeBar = new ScrollbarVanilla(10);
 		biomes = new Container(biomeBar, 14, 4);
 
 		if (!groupDef.isEmpty()) {

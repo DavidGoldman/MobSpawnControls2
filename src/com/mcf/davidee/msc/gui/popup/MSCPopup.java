@@ -4,8 +4,8 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mcf.davidee.gui.basic.BasicScreen;
-import com.mcf.davidee.gui.basic.OverlayScreen;
+import com.mcf.davidee.guilib.basic.BasicScreen;
+import com.mcf.davidee.guilib.basic.OverlayScreen;
 
 public abstract class MSCPopup extends OverlayScreen {
 	

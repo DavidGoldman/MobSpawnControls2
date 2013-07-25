@@ -4,9 +4,9 @@ import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.gui.GuiScreen;
 
-import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Button.ButtonHandler;
-import com.mcf.davidee.gui.basic.BasicScreen;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Button.ButtonHandler;
+import com.mcf.davidee.guilib.basic.BasicScreen;
 
 public abstract class MSCScreen extends BasicScreen implements ButtonHandler{
 

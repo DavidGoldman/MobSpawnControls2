@@ -5,16 +5,16 @@ import java.util.List;
 
 import net.minecraft.client.gui.GuiScreen;
 
-import com.mcf.davidee.gui.Button;
-import com.mcf.davidee.gui.Button.ButtonHandler;
-import com.mcf.davidee.gui.Container;
-import com.mcf.davidee.gui.Scrollbar;
-import com.mcf.davidee.gui.basic.FocusedContainer;
-import com.mcf.davidee.gui.basic.Label;
-import com.mcf.davidee.gui.focusable.FocusableLabel;
-import com.mcf.davidee.gui.focusable.FocusableWidget;
-import com.mcf.davidee.gui.vanilla.ButtonVanilla;
-import com.mcf.davidee.gui.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.guilib.basic.FocusedContainer;
+import com.mcf.davidee.guilib.basic.Label;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Button.ButtonHandler;
+import com.mcf.davidee.guilib.core.Container;
+import com.mcf.davidee.guilib.core.Scrollbar;
+import com.mcf.davidee.guilib.focusable.FocusableLabel;
+import com.mcf.davidee.guilib.focusable.FocusableWidget;
+import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
+import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
 import com.mcf.davidee.msc.Utils;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.CreatureTypePacket;
@@ -112,7 +112,7 @@ public class EditCreatureTypeScreen extends MSCScreen{
 		for (int i = 0; i < labels.length; ++i)
 			labels[i] = new FocusableLabel(packet.mobs[i]);
 		
-		scrollbar = new ScrollbarVanilla(15,142);
+		scrollbar = new ScrollbarVanilla(15);
 		labelContainer = new FocusedContainer(scrollbar, 14, 4);
 		labelContainer.addWidgets(labels);
 		

@@ -91,7 +91,7 @@ public class SpawnMap {
 	
 	public Packet getEvaluatedBiomePacket(String mod, String biome) {
 		String[][] entities = new String[4][];
-		SpawnList spawnList = biomeMap.get(BiomeNameHelper.getBiome(biome)).getBiomeSettings();
+		SpawnList spawnList = biomeMap.get(BiomeNameHelper.getBiome(biome)).getActiveList();
 		for (EnumCreatureType type : EnumCreatureType.values()) {
 			int index = type.ordinal();
 			
