@@ -34,7 +34,7 @@ public abstract class MSCPopup extends OverlayScreen {
 		super.drawBackground();
 		drawGradientRect(0, 0, width, height, -1072689136, -804253680);
 		int x = (width - WIDTH) / 2, y = (height - HEIGHT) / 2;
-		mc.renderEngine.func_110577_a(TEXTURE);
+		mc.renderEngine.bindTexture(TEXTURE);
 		GL11.glColor4f(1, 1, 1, 1);
 		drawTexturedModalRect(x, y, 0, 0, WIDTH, HEIGHT);
 	}

@@ -51,7 +51,7 @@ public class SpawnConfiguration {
 			EntityPlayerMP mp = (EntityPlayerMP) p;
 			if (mp.mcServer == null || mp.username == null)
 				return false;
-			return !mp.mcServer.isDedicatedServer() || mp.mcServer.getConfigurationManager().areCommandsAllowed(mp.username);
+			return !mp.mcServer.isDedicatedServer() || mp.mcServer.getConfigurationManager().isPlayerOpped(mp.username);
 		}
 		return false;
 	}

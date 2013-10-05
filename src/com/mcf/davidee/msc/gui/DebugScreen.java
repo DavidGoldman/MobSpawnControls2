@@ -55,7 +55,7 @@ public class DebugScreen extends MSCScreen{
 	@Override
 	protected void createGui() {
 		close = new ButtonVanilla(150,20,"Back",new CloseHandler());
-		title = new Label("MSC Debug", new Tooltip(MobSpawnControls.version));
+		title = new Label("MSC Debug", new Tooltip(MobSpawnControls.VERSION));
 		
 		container = new Container();
 		container.addWidgets(close,title);
