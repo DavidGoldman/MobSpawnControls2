@@ -1,12 +1,15 @@
 package com.mcf.davidee.msc.network;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.packet.BiomeListPacket;
 import com.mcf.davidee.msc.packet.CreatureTypePacket;
 import com.mcf.davidee.msc.packet.DebugPacket;
 import com.mcf.davidee.msc.packet.EntityListPacket;
 import com.mcf.davidee.msc.packet.GroupsPacket;
+import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.ModListPacket;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket;
@@ -33,4 +36,11 @@ public abstract class MSCPacketHandler {
 	public abstract void handleDebug(DebugPacket packet, EntityPlayer player);
 	
 	protected abstract boolean hasPermission(EntityPlayer player);
+	
+	public final void handlePacket(MSCPacket packet, EntityPlayer player) {
+		if (hasPermission(player))
+			packet.execute(this, player);
+		else if (player instanceof EntityPlayerMP)
+			MobSpawnControls.DISPATCHER.sendTo(MSCPacket.getPacket(PacketType.ACCESS_DENIED), (EntityPlayerMP)player);
+	}
 }

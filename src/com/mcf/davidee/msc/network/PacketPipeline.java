@@ -50,11 +50,11 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, MSCPac
         
         switch (FMLCommonHandler.instance().getEffectiveSide()) {
             case CLIENT:
-            	pkt.execute(MobSpawnControls.proxy.getClientHandler(), getClientPlayer());
+            	MobSpawnControls.proxy.getClientHandler().handlePacket(pkt, getClientPlayer());
                 break;
             case SERVER:
                 INetHandler netHandler = ctx.channel().attr(NetworkRegistry.NET_HANDLER).get();
-                pkt.execute(MobSpawnControls.proxy.getServerHandler(), ((NetHandlerPlayServer) netHandler).playerEntity);
+                MobSpawnControls.proxy.getServerHandler().handlePacket(pkt, ((NetHandlerPlayServer) netHandler).playerEntity);
                 break;
             default:
             	break;
