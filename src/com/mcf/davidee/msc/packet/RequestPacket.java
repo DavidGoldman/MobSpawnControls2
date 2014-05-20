@@ -1,12 +1,14 @@
 package com.mcf.davidee.msc.packet;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
+
 import com.google.common.primitives.UnsignedBytes;
 import com.mcf.davidee.msc.network.MSCPacketHandler;
-
-import cpw.mods.fml.common.network.Player;
 
 public class RequestPacket extends MSCPacket {
 
@@ -20,24 +22,21 @@ public class RequestPacket extends MSCPacket {
 			mod = (String) data[1];
 		return this;
 	}
-
+	
 	@Override
-	public byte[] generatePacket() {
-		ByteArrayDataOutput dat = ByteStreams.newDataOutput();
-		dat.writeByte(request);
-		dat.writeUTF(mod != null ? mod : "");
-		return dat.toByteArray();
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf to) throws IOException {
+		to.writeByte(request);
+		writeString(mod != null ? mod : "", to);
 	}
 
 	@Override
-	public MSCPacket readPacket(ByteArrayDataInput pkt) {
-		request = pkt.readByte();
-		mod = pkt.readUTF();
-		return this;
+	public void decodeFrom(ChannelHandlerContext ctx, ByteBuf from) throws IOException { 
+		request = from.readByte();
+		mod = readString(from);
 	}
 
 	@Override
-	public void execute(MSCPacketHandler handler, Player player) {
+	public void execute(MSCPacketHandler handler, EntityPlayer player) {
 		handler.handleRequest(PacketType.values()[UnsignedBytes.toInt(request)], mod, player);
 	}
 

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
-
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.biome.SpawnListEntry;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
 public class SpawnList {
 	private List<SpawnListEntry> m, c, w, a;
@@ -35,10 +33,12 @@ public class SpawnList {
 		this.a = copySpawnListEntries(entryList.a);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public SpawnListEntry getEntityEntry(Class entityClass, EnumCreatureType type) {
 		return getEntityEntry(entityClass, getSpawnList(type));
 	}
 
+	@SuppressWarnings("rawtypes")
 	private static SpawnListEntry getEntityEntry(Class entityClass, List<SpawnListEntry> list) {
 		for (SpawnListEntry e : list) 
 			if (e.entityClass == entityClass)
@@ -46,10 +46,12 @@ public class SpawnList {
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void removeEntityEntry(Class entityClass, EnumCreatureType type) {
 		removeEntityEntry(entityClass, getSpawnList(type));
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void removeEntityEntry(Class entityClass, List<SpawnListEntry> list) {
 		for (Iterator<SpawnListEntry> it = list.iterator(); it.hasNext(); ) 
 			if (it.next().entityClass == entityClass) {
@@ -110,10 +112,9 @@ public class SpawnList {
 		return s;
 	}
 
-	public static List<Class> getDisabledEntities(List<SpawnListEntry> spawning, List<Class<? extends EntityLiving>> list) {
-		List<Class> disabled = new ArrayList<Class>();
-		
-		for (Class clazz : list) {
+	public static List<Class<? extends EntityLiving>> getDisabledEntities(List<SpawnListEntry> spawning, List<Class<? extends EntityLiving>> list) {
+		List<Class<? extends EntityLiving>> disabled = new ArrayList<Class<? extends EntityLiving>>();
+		for (Class<? extends EntityLiving> clazz : list) {
 			boolean found = false;
 
 			for (SpawnListEntry e : spawning) {
@@ -122,10 +123,8 @@ public class SpawnList {
 					break;
 				}
 			}
-			
 			if (!found)
 				disabled.add(clazz);
-
 		}
 		return disabled;
 	}

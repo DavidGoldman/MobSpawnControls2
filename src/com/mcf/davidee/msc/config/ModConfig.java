@@ -9,29 +9,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.SpawnListEntry;
 
-import com.google.common.base.Strings;
-import com.mcf.davidee.msc.BiomeNameHelper;
 import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.Utils;
 import com.mcf.davidee.msc.config.parser.ModConfigParser;
 import com.mcf.davidee.msc.grouping.BiomeGroup;
-import com.mcf.davidee.msc.grouping.BiomeOperand;
-import com.mcf.davidee.msc.grouping.BiomeOperator;
 import com.mcf.davidee.msc.grouping.SpawnMap;
-import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
 import com.mcf.davidee.msc.spawning.CreatureTypeMap;
-import com.mcf.davidee.msc.spawning.MobHelper;
 
 import cpw.mods.fml.common.ModContainer;
 
@@ -245,18 +234,6 @@ public class ModConfig {
 	private void warn(String message, String line) {
 		MobSpawnControls.getLogger().warning(message + " in " + fileName + ".cfg:" + lineNum + " \"" + line + "\"");
 	}
-
-	private void warn(String message) {
-		MobSpawnControls.getLogger().warning(message + " in " + fileName + ".cfg:" + lineNum);
-	}
-
-	//Used to write a line multiple times, as indicated by num
-	private void writeLines(BufferedWriter writer, String line, int num) throws IOException {
-		for (int i = 0; i < num; ++i) {
-			writer.write(line);
-			writer.newLine();
-		}
-	}
 	
 	public BiomeGroup getBiomeGroup(String name) {
 		for (BiomeGroup group : groups)
@@ -290,6 +267,7 @@ public class ModConfig {
 		return clazz;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Class<? extends EntityLiving> getEntityClass(String s) {
 		//Check for vanilla and Forge-registered entities
 		String entityName = s;

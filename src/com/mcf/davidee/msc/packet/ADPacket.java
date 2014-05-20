@@ -1,9 +1,13 @@
 package com.mcf.davidee.msc.packet;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.mcf.davidee.msc.network.MSCPacketHandler;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
-import cpw.mods.fml.common.network.Player;
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+import com.mcf.davidee.msc.network.MSCPacketHandler;
 
 public class ADPacket extends MSCPacket {
 
@@ -11,20 +15,15 @@ public class ADPacket extends MSCPacket {
 	public MSCPacket readData(Object... data) {
 		return this;
 	}
+	
+	@Override
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf to) throws IOException { }
 
 	@Override
-	public byte[] generatePacket() {
-		return new byte[0];
-	}
+	public void decodeFrom(ChannelHandlerContext ctx, ByteBuf from) throws IOException { }
 
 	@Override
-	public MSCPacket readPacket(ByteArrayDataInput pkt) {
-		return this;
-	}
-
-	@Override
-	public void execute(MSCPacketHandler handler, Player player) {
+	public void execute(MSCPacketHandler handler, EntityPlayer player) {
 		handler.handleAccessDenied(player);
 	}
-
 }

@@ -14,13 +14,12 @@ import com.mcf.davidee.guilib.vanilla.CheckboxVanilla;
 import com.mcf.davidee.guilib.vanilla.TextFieldVanilla;
 import com.mcf.davidee.guilib.vanilla.TextFieldVanilla.NumberFilter;
 import com.mcf.davidee.guilib.vanilla.sliders.IntSlider;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.Utils;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.settings.SettingsPacket;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class SettingsScreen extends MSCScreen {
 	
@@ -92,7 +91,6 @@ public class SettingsScreen extends MSCScreen {
 	private void save() {
 		int[] caps = new int[] { mon.getIntValue(), cre.getIntValue(), amb.getIntValue(), wat.getIntValue() };
 		int cFreq = Utils.parseIntDMinMax(creatureFreq.getText(), packet.creatureFreq, 1, 400);
-		PacketDispatcher.sendPacketToServer(MSCPacket.getPacket(PacketType.SETTINGS, 
-				readOnly.isChecked(), masterEnabled.isChecked(), caps, cFreq));
+		MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getPacket(PacketType.SETTINGS, readOnly.isChecked(), masterEnabled.isChecked(), caps, cFreq));
 	}
 }

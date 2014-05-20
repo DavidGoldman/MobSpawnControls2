@@ -18,6 +18,7 @@ import com.mcf.davidee.guilib.focusable.FocusableLabel;
 import com.mcf.davidee.guilib.focusable.FocusableWidget;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.gui.popup.GroupPopup;
 import com.mcf.davidee.msc.gui.popup.PopupYesNo;
@@ -25,8 +26,6 @@ import com.mcf.davidee.msc.gui.popup.PopupYesNo.YesNoHandler;
 import com.mcf.davidee.msc.packet.GroupsPacket;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GroupsMenu extends MSCScreen{
 
@@ -93,8 +92,7 @@ public class GroupsMenu extends MSCScreen{
 					String gName = groups.get(i);
 					arr[i] = gName + '=' + groupMap.get(gName);
 				}
-				PacketDispatcher.sendPacketToServer(MSCPacket.getPacket(PacketType.GROUPS, 
-						packet.mod, arr, log.toArray(new String[0])));
+				MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getPacket(PacketType.GROUPS, packet.mod, arr, log.toArray(new String[0])));
 				close();
 			}
 		});

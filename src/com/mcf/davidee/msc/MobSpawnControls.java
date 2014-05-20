@@ -15,8 +15,7 @@ import net.minecraft.world.storage.SaveHandler;
 import com.mcf.davidee.msc.config.SpawnConfiguration;
 import com.mcf.davidee.msc.forge.CommonProxy;
 import com.mcf.davidee.msc.forge.SpawnFreqTicker;
-import com.mcf.davidee.msc.network.ClientPacketHandler;
-import com.mcf.davidee.msc.network.ServerPacketHandler;
+import com.mcf.davidee.msc.network.PacketPipeline;
 import com.mcf.davidee.msc.reflect.BiomeClassLoader;
 import com.mcf.davidee.msc.spawning.MobHelper;
 
@@ -30,22 +29,14 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 
-@Mod( modid = "MSC2", name="Mob Spawn Controls 2", dependencies = "after:*", version=MobSpawnControls.VERSION)
-@NetworkMod(
-		clientSideRequired = false,
-		serverSideRequired = false,
-		clientPacketHandlerSpec = @SidedPacketHandler(channels = "msc2", packetHandler = ClientPacketHandler.class),
-		serverPacketHandlerSpec = @SidedPacketHandler(channels = "msc2", packetHandler = ServerPacketHandler.class)
-		)
-
+@Mod(modid = "MSC2", name="Mob Spawn Controls 2", dependencies = "after:*", version=MobSpawnControls.VERSION)
 public class MobSpawnControls{
 
-	public static final String VERSION = "1.1.0";
+	public static final String VERSION = "1.2.0";
+	public static final PacketPipeline DISPATCHER = new PacketPipeline();
 	
 	@SidedProxy(clientSide = "com.mcf.davidee.msc.forge.ClientProxy", serverSide = "com.mcf.davidee.msc.forge.CommonProxy")
 	public static CommonProxy proxy;
@@ -61,6 +52,7 @@ public class MobSpawnControls{
 	}
 
 	private SpawnConfiguration config, defaultConfig;
+	private SpawnFreqTicker ticker;
 
 
 	@EventHandler 
@@ -92,7 +84,8 @@ public class MobSpawnControls{
 
 		logger.info("Mob Spawn Controls initializing...");
 
-		TickRegistry.registerScheduledTickHandler(new SpawnFreqTicker(), Side.SERVER);
+		ticker = new SpawnFreqTicker();
+		DISPATCHER.initialize();
 	}
 
 	@EventHandler 
@@ -103,9 +96,14 @@ public class MobSpawnControls{
 		logger.info("Mapping biomes...");
 		BiomeNameHelper.initBiomeMap();
 		logger.info("Creating default spawn configuration...");
-		defaultConfig = new SpawnConfiguration(new File(new File(proxy.getMinecraftDirectory(),"config"),"default_msc"));
+		defaultConfig = new SpawnConfiguration(new File(new File(proxy.getMinecraftDirectory(),"config"), "default_msc"));
 		defaultConfig.load();
 		defaultConfig.save();
+	}
+	
+	@SubscribeEvent
+	public void onServerTick(ServerTickEvent event) {
+		ticker.tick();
 	}
 
 	@EventHandler  

@@ -1,11 +1,13 @@
 package com.mcf.davidee.msc.packet;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import com.mcf.davidee.msc.network.MSCPacketHandler;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
-import cpw.mods.fml.common.network.Player;
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+import com.mcf.davidee.msc.network.MSCPacketHandler;
 
 public class CreatureTypePacket extends MSCPacket {
 
@@ -20,26 +22,23 @@ public class CreatureTypePacket extends MSCPacket {
 		mobs = (String[]) data[2];
 		return this;
 	}
-
+	
 	@Override
-	public byte[] generatePacket() {
-		ByteArrayDataOutput dat = ByteStreams.newDataOutput();
-		dat.writeUTF(mod);
-		dat.writeUTF(creatureType);
-		writeStringArray(mobs, dat);
-		return dat.toByteArray();
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf to) throws IOException { 
+		writeString(mod, to);
+		writeString(creatureType, to);
+		writeStringArray(mobs, to);
 	}
 
 	@Override
-	public MSCPacket readPacket(ByteArrayDataInput pkt) {
-		mod = pkt.readUTF();
-		creatureType = pkt.readUTF();
-		mobs = readStringArray(pkt);
-		return this;
+	public void decodeFrom(ChannelHandlerContext ctx, ByteBuf from) throws IOException {
+		mod = readString(from);
+		creatureType = readString(from);
+		mobs = readStringArray(from);
 	}
 
 	@Override
-	public void execute(MSCPacketHandler handler, Player player) {
+	public void execute(MSCPacketHandler handler, EntityPlayer player) {
 		handler.handleCreatureType(this, player);
 	}
 

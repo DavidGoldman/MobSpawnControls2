@@ -3,7 +3,6 @@ package com.mcf.davidee.msc.gui.popup;
 import java.util.Set;
 
 import com.google.common.base.Strings;
-import com.mcf.davidee.guilib.basic.BasicScreen.CloseHandler;
 import com.mcf.davidee.guilib.basic.Label;
 import com.mcf.davidee.guilib.core.Button;
 import com.mcf.davidee.guilib.core.Button.ButtonHandler;

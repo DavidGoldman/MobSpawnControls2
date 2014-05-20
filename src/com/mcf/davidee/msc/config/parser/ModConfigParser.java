@@ -8,7 +8,7 @@ import java.util.Set;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.SpawnListEntry;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
 import com.google.common.base.Strings;
 import com.mcf.davidee.msc.BiomeNameHelper;

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import com.mcf.davidee.msc.BiomeNameHelper;
@@ -17,16 +17,13 @@ import com.mcf.davidee.msc.reflect.BiomeReflector;
 import com.mcf.davidee.msc.spawning.CreatureTypeMap;
 
 import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.network.Player;
 
 public class SpawnConfiguration {
 
-	private File folder;
 	private List<ModConfig> configs;
 	private SpawnSettings settings;
 
 	public SpawnConfiguration(File folder) {
-		this.folder = folder;
 		folder.mkdirs();
 		MobSpawnControls.getLogger().info("Generating configs in directory \"" + folder.getAbsolutePath() + "\"");
 		settings = new SpawnSettings(folder);
@@ -37,7 +34,6 @@ public class SpawnConfiguration {
 	}
 
 	public SpawnConfiguration(File folder, SpawnConfiguration _default) {
-		this.folder = folder;
 		folder.mkdirs();
 		MobSpawnControls.getLogger().info("Generating configs in directory \"" + folder.getAbsolutePath() + "\"");
 		settings = new SpawnSettings(folder, _default.settings);
@@ -46,12 +42,12 @@ public class SpawnConfiguration {
 			configs.add(new ModConfig(c.container, folder, c));
 	}
 
-	public boolean canPlayerEdit(Player p) {
+	public boolean canPlayerEdit(EntityPlayer p) {
 		if (settings.canEdit() && p instanceof EntityPlayerMP) {
 			EntityPlayerMP mp = (EntityPlayerMP) p;
-			if (mp.mcServer == null || mp.username == null)
+			if (mp.mcServer == null || mp.getCommandSenderName() == null)
 				return false;
-			return !mp.mcServer.isDedicatedServer() || mp.mcServer.getConfigurationManager().isPlayerOpped(mp.username);
+			return !mp.mcServer.isDedicatedServer() || mp.mcServer.getConfigurationManager().isPlayerOpped(mp.getCommandSenderName());
 		}
 		return false;
 	}
@@ -96,11 +92,11 @@ public class SpawnConfiguration {
 	}
 
 	//Mostly helper functions dealing with the GUI
-	public Packet createModListPacket() {
+	public MSCPacket createModListPacket() {
 		String[] names = new String[configs.size()];
 		for (int i = 0; i < names.length; ++i)
 			names[i] = configs.get(i).configName;
-		return MSCPacket.getPacket(PacketType.MOD_LIST, (Object) names);
+		return MSCPacket.getPacket(PacketType.MOD_LIST, (Object)names);
 	}
 
 	public SpawnSettings getSettings() {

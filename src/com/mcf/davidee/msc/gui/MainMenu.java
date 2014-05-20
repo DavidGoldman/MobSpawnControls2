@@ -9,8 +9,6 @@ import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-
 public class MainMenu extends MSCScreen{
 
 	private Container container;
@@ -40,17 +38,17 @@ public class MainMenu extends MSCScreen{
 	@Override
 	public void buttonClicked(Button button){
 		if (button == mods)
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.MOD_LIST));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.MOD_LIST));
 		if (button == settings)
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.SETTINGS));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.SETTINGS));
 		if (button == debug)
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.DEBUG));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.DEBUG));
 		setEnabled(false,mods,settings,debug);
 	}
 	
 	@Override
 	protected void reopenedGui(){
-		setEnabled(true,mods,settings,debug);
+		setEnabled(true, mods, settings, debug);
 	}
 	
 	@Override

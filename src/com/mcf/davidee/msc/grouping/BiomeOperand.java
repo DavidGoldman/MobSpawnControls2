@@ -1,12 +1,11 @@
 package com.mcf.davidee.msc.grouping;
 
-import java.util.HashSet;
 import java.util.Set;
+
+import net.minecraft.world.biome.BiomeGenBase;
 
 import com.mcf.davidee.msc.BiomeNameHelper;
 import com.mcf.davidee.msc.Utils;
-
-import net.minecraft.world.biome.BiomeGenBase;
 
 public class BiomeOperand {
 

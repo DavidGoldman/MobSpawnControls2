@@ -7,10 +7,9 @@ import com.mcf.davidee.guilib.basic.Tooltip;
 import com.mcf.davidee.guilib.core.Button;
 import com.mcf.davidee.guilib.core.Container;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class MobTypesMenu extends MSCScreen{
 	
@@ -43,8 +42,7 @@ public class MobTypesMenu extends MSCScreen{
 	
 	@Override
 	public void buttonClicked(Button b) {
-		PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.CREATURE_TYPE, 
-				mod + ":" + ((ButtonVanilla)b).getText()));
+		MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.CREATURE_TYPE, mod + ":" + ((ButtonVanilla)b).getText()));
 		setEnabled(false, monster, creature, ambient, water, none);
 	}
 	

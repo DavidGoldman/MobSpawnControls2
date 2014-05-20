@@ -10,14 +10,13 @@ import com.mcf.davidee.guilib.core.Scrollbar;
 import com.mcf.davidee.guilib.focusable.FocusableLabel;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.gui.MobTypesMenu;
 import com.mcf.davidee.msc.gui.SpawnControlMenu;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.ModListPacket;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class ModListScreen extends MSCScreen{
 
@@ -96,7 +95,7 @@ public class ModListScreen extends MSCScreen{
 		if (button == controls)
 			mc.displayGuiScreen(new SpawnControlMenu(mod, this));
 		if (button == groups)
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.GROUPS, mod));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.GROUPS, mod));
 	}
 	
 }

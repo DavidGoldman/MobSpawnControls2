@@ -12,13 +12,12 @@ import com.mcf.davidee.guilib.focusable.FocusableLabel;
 import com.mcf.davidee.guilib.focusable.FocusableWidget;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.EntityListPacket;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.spawning.MobHelper;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class EntityListScreen extends MSCScreen{
 
@@ -104,8 +103,7 @@ public class EntityListScreen extends MSCScreen{
 		if (button == select) {
 			sent = true;
 			String selectedObj = ((FocusableLabel)labelContainer.getFocusedWidget()).getText();
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.ENTITY_SETTING, 
-					packet.mod + ':' + selectedObj));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.ENTITY_SETTING, packet.mod + ':' + selectedObj));
 		}
 		else { //CreatureType button
 			String type = button.getText().replace("Water", "WaterCreature");

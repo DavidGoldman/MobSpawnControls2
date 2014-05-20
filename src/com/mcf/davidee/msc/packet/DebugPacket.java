@@ -1,11 +1,13 @@
 package com.mcf.davidee.msc.packet;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import com.mcf.davidee.msc.network.MSCPacketHandler;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
-import cpw.mods.fml.common.network.Player;
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+import com.mcf.davidee.msc.network.MSCPacketHandler;
 
 public class DebugPacket extends MSCPacket {
 
@@ -16,22 +18,19 @@ public class DebugPacket extends MSCPacket {
 		log = (String[]) data[0];
 		return this;
 	}
-
+	
 	@Override
-	public byte[] generatePacket() {
-		ByteArrayDataOutput out = ByteStreams.newDataOutput();
-		writeStringArray(log, out);
-		return out.toByteArray();
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf to) throws IOException { 
+		writeStringArray(log, to);
 	}
 
 	@Override
-	public MSCPacket readPacket(ByteArrayDataInput pkt) {
-		log = readStringArray(pkt);
-		return this;
+	public void decodeFrom(ChannelHandlerContext ctx, ByteBuf from) throws IOException {
+		log = readStringArray(from);
 	}
 
 	@Override
-	public void execute(MSCPacketHandler handler, Player player) {
+	public void execute(MSCPacketHandler handler, EntityPlayer player) {
 		handler.handleDebug(this, player);
 	}
 

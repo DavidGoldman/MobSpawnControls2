@@ -13,12 +13,11 @@ import com.mcf.davidee.guilib.focusable.FocusableLabel;
 import com.mcf.davidee.guilib.focusable.FocusableWidget;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.BiomeListPacket;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class BiomeListScreen extends MSCScreen{
 
@@ -118,13 +117,13 @@ public class BiomeListScreen extends MSCScreen{
 			String selected = ((FocusableLabel)labelContainer.getFocusedWidget()).getText();
 			
 			if (packet.evalRequest) {
-				if (selected.contains(".")) // Biome
-					PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.EVALUATED_BIOME, packet.mod + ':' + selected));
+				if (selected.contains(".")) //Biome
+					MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.EVALUATED_BIOME, packet.mod + ':' + selected));
 				else  //Group
- 					PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.EVALUATED_GROUP, packet.mod + ':' + selected));
+					MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.EVALUATED_GROUP, packet.mod + ':' + selected));
 			}
 			else
-				PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.BIOME_SETTING, packet.mod + ':' + selected));
+				MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.BIOME_SETTING, packet.mod + ':' + selected));
 		}
 	}
 

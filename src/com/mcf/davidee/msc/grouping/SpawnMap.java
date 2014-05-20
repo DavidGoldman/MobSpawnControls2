@@ -16,9 +16,8 @@ import java.util.TreeMap;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.SpawnListEntry;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
 import com.mcf.davidee.msc.BiomeNameHelper;
 import com.mcf.davidee.msc.MobSpawnControls;
@@ -29,7 +28,6 @@ import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.settings.BiomeSettingPacket.EntityEntry;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
 import com.mcf.davidee.msc.reflect.BiomeReflector;
-import com.mcf.davidee.msc.spawning.CreatureTypeMap;
 import com.mcf.davidee.msc.spawning.SpawnList;
 
 public class SpawnMap {
@@ -89,7 +87,7 @@ public class SpawnMap {
 		groups.add(new GroupSetting(group));
 	}
 	
-	public Packet getEvaluatedBiomePacket(String mod, String biome) {
+	public MSCPacket getEvaluatedBiomePacket(String mod, String biome) {
 		String[][] entities = new String[4][];
 		SpawnList spawnList = biomeMap.get(BiomeNameHelper.getBiome(biome)).getActiveList();
 		for (EnumCreatureType type : EnumCreatureType.values()) {
@@ -104,7 +102,7 @@ public class SpawnMap {
 		return MSCPacket.getPacket(PacketType.EVALUATED_BIOME, mod, biome, entities);
 	}
 	
-	public Packet getEvaluatedGroupPacket(String mod, String group) {
+	public MSCPacket getEvaluatedGroupPacket(String mod, String group) {
 		List<String> biomeNames = new ArrayList<String>();
 		BiomeGroup biomeGroup = getGroup(group);
 		for (BiomeGenBase biome : biomeGroup.evaluate()) 
@@ -114,7 +112,8 @@ public class SpawnMap {
 				biomeNames.toArray(new String[0]));
 	}
 	
-	public Packet getBiomeSettingPacket(String mod, String biome, ModConfig config) {
+	@SuppressWarnings("unchecked")
+	public MSCPacket getBiomeSettingPacket(String mod, String biome, ModConfig config) {
 		EntityEntry[][] spawning = new EntityEntry[4][];
 		String[][] notSpawning = new String[4][];
 		SpawnList spawnList =  biome.equalsIgnoreCase("master") ? master : (biome.contains(".") ?
@@ -130,7 +129,7 @@ public class SpawnMap {
 				entries.add(new EntityEntry(entityName, e.itemWeight, e.minGroupCount, e.maxGroupCount));
 			}
 			
-			for (Class c : SpawnList.getDisabledEntities(spawnList.getSpawnList(type), config.getTypeMap().getEntitiesOfType(type))) 
+			for (Class<? extends EntityLiving> c : SpawnList.getDisabledEntities(spawnList.getSpawnList(type), config.getTypeMap().getEntitiesOfType(type))) 
 				disabled.add(config.getEntityName(c));
 			
 			spawning[index] = entries.toArray(new EntityEntry[0]);
@@ -140,7 +139,7 @@ public class SpawnMap {
 		return MSCPacket.getPacket(PacketType.BIOME_SETTING, mod, biome, spawning, notSpawning);
 	}
 
-	public Packet getEntitySettingPacket(String mod, String entity, EnumCreatureType type, Class entityClass) {
+	public MSCPacket getEntitySettingPacket(String mod, String entity, EnumCreatureType type, Class<? extends EntityLiving> entityClass) {
 		List<BiomeEntry> spawning = new ArrayList<BiomeEntry>();
 		List<String> notSpawning = new ArrayList<String>();
 
@@ -165,7 +164,7 @@ public class SpawnMap {
 				spawning.toArray(new BiomeEntry[0]), notSpawning.toArray(new String[0]));
 	}
 
-	public void setEntitySettings(ModConfig config, Class entityClass, EnumCreatureType type, BiomeEntry[] entries) {
+	public void setEntitySettings(ModConfig config, Class<? extends EntityLiving> entityClass, EnumCreatureType type, BiomeEntry[] entries) {
 		for (GroupSetting s : groups)
 			s.getSpawnList().removeEntityEntry(entityClass, type);
 		for (BiomeSetting s : biomeMap.values())

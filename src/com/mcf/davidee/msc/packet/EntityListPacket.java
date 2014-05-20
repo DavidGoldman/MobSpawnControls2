@@ -1,11 +1,13 @@
 package com.mcf.davidee.msc.packet;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import com.mcf.davidee.msc.network.MSCPacketHandler;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
-import cpw.mods.fml.common.network.Player;
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+import com.mcf.davidee.msc.network.MSCPacketHandler;
 
 public class EntityListPacket extends MSCPacket{
 
@@ -18,27 +20,24 @@ public class EntityListPacket extends MSCPacket{
 		entities = (String[][]) data[1];
 		return this;
 	}
-
+	
 	@Override
-	public byte[] generatePacket() {
-		ByteArrayDataOutput out = ByteStreams.newDataOutput();
-		out.writeUTF(mod);
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf to) throws IOException { 
+		writeString(mod, to);
 		for (int i = 0; i < 4; ++i)
-			writeStringArray(entities[i], out);
-		return out.toByteArray();
+			writeStringArray(entities[i], to);
 	}
 
 	@Override
-	public MSCPacket readPacket(ByteArrayDataInput pkt) {
-		mod = pkt.readUTF();
+	public void decodeFrom(ChannelHandlerContext ctx, ByteBuf from) throws IOException {
+		mod = readString(from);
 		entities = new String[4][];
 		for (int i = 0; i < 4; ++i)
-			entities[i] = readStringArray(pkt);
-		return this;
+			entities[i] = readStringArray(from);
 	}
 
 	@Override
-	public void execute(MSCPacketHandler handler, Player player) {
+	public void execute(MSCPacketHandler handler, EntityPlayer player) {
 		handler.handleEntityList(this, player);
 	}
 

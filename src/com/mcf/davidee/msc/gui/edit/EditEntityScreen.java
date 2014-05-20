@@ -19,13 +19,12 @@ import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 import com.mcf.davidee.guilib.vanilla.CheckboxVanilla;
 import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
 import com.mcf.davidee.guilib.vanilla.sliders.IntSlider;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket;
 import com.mcf.davidee.msc.packet.settings.EntitySettingPacket.BiomeEntry;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class EditEntityScreen extends MSCScreen{
 	
@@ -193,7 +192,7 @@ public class EditEntityScreen extends MSCScreen{
 			else
 				empty.add(e.biome);
 		}
-		PacketDispatcher.sendPacketToServer(MSCPacket.getPacket( PacketType.ENTITY_SETTING, packet.mod, packet.entity, 
-				entries.toArray(new BiomeEntry[0]), empty.toArray(new String[0]) ));
+		MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getPacket( PacketType.ENTITY_SETTING, packet.mod, packet.entity, 
+				entries.toArray(new BiomeEntry[0]), empty.toArray(new String[0])));
 	}
 }

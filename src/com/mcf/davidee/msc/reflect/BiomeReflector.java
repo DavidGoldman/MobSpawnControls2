@@ -3,14 +3,16 @@ package com.mcf.davidee.msc.reflect;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
+
 import com.mcf.davidee.msc.BiomeNameHelper;
 import com.mcf.davidee.msc.MobSpawnControls;
 
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.SpawnListEntry;
-
 public class BiomeReflector {
+	
+	private static final int MONSTER_INDEX = 72;
 	
 	//TODO Cache
 	public static List<SpawnListEntry> reflectList(BiomeGenBase biome, EnumCreatureType type) {
@@ -25,10 +27,11 @@ public class BiomeReflector {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static List<SpawnListEntry> reflect(BiomeGenBase biome, int ordinal) throws Exception {
-		Field f = BiomeGenBase.class.getDeclaredFields()[35+ordinal];
+		Field f = BiomeGenBase.class.getDeclaredFields()[MONSTER_INDEX+ordinal];
 		f.setAccessible(true);
 		return (List<SpawnListEntry>)f.get(biome);
 	}
-	
 }
+	

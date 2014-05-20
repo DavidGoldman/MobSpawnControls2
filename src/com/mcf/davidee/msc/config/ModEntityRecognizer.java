@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 
@@ -27,11 +28,12 @@ public class ModEntityRecognizer {
 		return ObfuscationReflectionHelper.getPrivateValue(EntityRegistry.class, EntityRegistry.instance(), "entityRegistrations");
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<Class<? extends EntityLiving>> getEntityClasses(ModContainer c) {
 		if (c == null)
 			return getVanillaEntityClasses();
 		List<EntityRegistration> regs = getRegistrations(c);
-		List<Class<? extends EntityLiving>> cls = new ArrayList(regs.size());
+		List<Class<? extends EntityLiving>> cls = new ArrayList<Class<? extends EntityLiving>>(regs.size());
 		for (EntityRegistration r : regs) {
 			if (isValidEntityClass(r.getEntityClass()))
 				cls.add((Class<? extends EntityLiving>) r.getEntityClass());
@@ -39,12 +41,13 @@ public class ModEntityRecognizer {
 		return cls;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static List<Class<? extends EntityLiving>> getVanillaEntityClasses() {
-		List<Class<? extends EntityLiving>> cls = new ArrayList();
+		List<Class<? extends EntityLiving>> cls = new ArrayList<Class<? extends EntityLiving>>();
 		for (Object o : EntityList.classToStringMapping.entrySet()) {
-			Entry<Class, String> entry = (Entry<Class, String>) o;
+			Entry<Class<? extends Entity>, String> entry = (Entry<Class<? extends Entity>, String>) o;
 			if (isValidEntityClass(entry.getKey()) && EntityRegistry.instance().lookupModSpawn(entry.getKey(),false) == null)
-				cls.add(entry.getKey());
+				cls.add((Class<? extends EntityLiving>) entry.getKey());
 		}
 		return cls;
 
@@ -57,7 +60,7 @@ public class ModEntityRecognizer {
 		return false;
 	}
 
-	public static boolean isValidEntityClass(Class c) {
+	public static boolean isValidEntityClass(Class<?> c) {
 		return c != null && !Modifier.isAbstract(c.getModifiers()) && EntityLiving.class.isAssignableFrom(c);
 	}
 

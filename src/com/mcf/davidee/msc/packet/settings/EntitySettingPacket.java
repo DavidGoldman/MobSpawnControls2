@@ -1,15 +1,16 @@
 package com.mcf.davidee.msc.packet.settings;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import net.minecraft.entity.player.EntityPlayer;
+
 import com.mcf.davidee.msc.network.MSCPacketHandler;
 import com.mcf.davidee.msc.packet.MSCPacket;
-
-import cpw.mods.fml.common.network.Player;
 
 public class EntitySettingPacket extends MSCPacket {
 
@@ -26,34 +27,31 @@ public class EntitySettingPacket extends MSCPacket {
 		disabled = (String[]) data[3];
 		return this;
 	}
-
+	
 	@Override
-	public byte[] generatePacket() {
-		ByteArrayDataOutput dat = ByteStreams.newDataOutput();
-		dat.writeUTF(mod);
-		dat.writeUTF(entity);
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf to) throws IOException { 
+		writeString(mod, to);
+		writeString(entity, to);
 		
-		dat.writeInt(entries.length);
+		to.writeInt(entries.length);
 		for (BiomeEntry e : entries) {
-			dat.writeUTF(e.biome);
-			dat.writeInt(e.weight);
-			dat.writeInt(e.min);
-			dat.writeInt(e.max);
+			writeString(e.biome, to);
+			to.writeInt(e.weight);
+			to.writeInt(e.min);
+			to.writeInt(e.max);
 		}
-		writeStringArray(disabled, dat);
-		return dat.toByteArray();
+		writeStringArray(disabled, to);
 	}
 
 	@Override
-	public MSCPacket readPacket(ByteArrayDataInput pkt) {
-		mod = pkt.readUTF();
-		entity = pkt.readUTF();
+	public void decodeFrom(ChannelHandlerContext ctx, ByteBuf from) throws IOException { 
+		mod = readString(from);
+		entity = readString(from);
 		
-		entries = new BiomeEntry[pkt.readInt()];
+		entries = new BiomeEntry[from.readInt()];
 		for (int i = 0; i < entries.length; ++i)
-			entries[i] = new BiomeEntry(pkt.readUTF(), pkt.readInt(), pkt.readInt(), pkt.readInt());
-		disabled = readStringArray(pkt);
-		return this;
+			entries[i] = new BiomeEntry(readString(from), from.readInt(), from.readInt(), from.readInt());
+		disabled = readStringArray(from);
 	}
 	
 	public BiomeEntry[] getOrderedEntries() {
@@ -71,12 +69,11 @@ public class EntitySettingPacket extends MSCPacket {
 	}
 
 	@Override
-	public void execute(MSCPacketHandler handler, Player player) {
+	public void execute(MSCPacketHandler handler, EntityPlayer player) {
 		handler.handleEntitySetting(this, player);
 	}
 
 	public static class BiomeEntry {
-		
 		public String biome;
 		public int weight;
 		public int min;

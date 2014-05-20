@@ -1,11 +1,13 @@
 package com.mcf.davidee.msc.packet;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import com.mcf.davidee.msc.network.MSCPacketHandler;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
-import cpw.mods.fml.common.network.Player;
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
+
+import com.mcf.davidee.msc.network.MSCPacketHandler;
 
 public class GroupsPacket extends MSCPacket {
 
@@ -20,26 +22,23 @@ public class GroupsPacket extends MSCPacket {
 		biomeNames = (String[]) data[2];
 		return this;
 	}
-
+	
 	@Override
-	public byte[] generatePacket() {
-		ByteArrayDataOutput dat = ByteStreams.newDataOutput();
-		dat.writeUTF(mod);
-		writeStringArray(groups, dat);
-		writeStringArray(biomeNames, dat);
-		return dat.toByteArray();
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf to) throws IOException { 
+		writeString(mod, to);
+		writeStringArray(groups, to);
+		writeStringArray(biomeNames, to);
 	}
 
 	@Override
-	public MSCPacket readPacket(ByteArrayDataInput pkt) {
-		mod = pkt.readUTF();
-		groups = readStringArray(pkt);
-		biomeNames = readStringArray(pkt);
-		return this;
+	public void decodeFrom(ChannelHandlerContext ctx, ByteBuf from) throws IOException {
+		mod = readString(from);
+		groups = readStringArray(from);
+		biomeNames = readStringArray(from);
 	}
 
 	@Override
-	public void execute(MSCPacketHandler handler, Player player) {
+	public void execute(MSCPacketHandler handler, EntityPlayer player) {
 		handler.handleGroups(this, player);
 	}
 

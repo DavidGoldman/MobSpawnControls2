@@ -1,10 +1,9 @@
 package com.mcf.davidee.msc.gui;
 
-import com.mcf.davidee.guilib.core.Button;
-import com.mcf.davidee.guilib.core.Container;
-import com.mcf.davidee.guilib.core.Button.ButtonHandler;
 import com.mcf.davidee.guilib.basic.Label;
 import com.mcf.davidee.guilib.basic.Tooltip;
+import com.mcf.davidee.guilib.core.Button;
+import com.mcf.davidee.guilib.core.Container;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 
 public class AccessDeniedScreen extends MSCScreen {

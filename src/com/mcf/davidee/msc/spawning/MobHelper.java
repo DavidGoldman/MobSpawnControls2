@@ -1,18 +1,16 @@
 package com.mcf.davidee.msc.spawning;
 
-import java.util.List;
 import java.util.Set;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.SpawnListEntry;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 
 import com.mcf.davidee.msc.config.ModEntityRecognizer;
 import com.mcf.davidee.msc.reflect.BiomeReflector;
@@ -21,16 +19,17 @@ public class MobHelper {
 	
 	private static CreatureTypeMap defaultMap = new CreatureTypeMap();
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void populateDefaultMap(){
 		for (Class c: (Set<Class>)EntityList.classToStringMapping.keySet()){
 			
 			if (ModEntityRecognizer.isValidEntityClass(c)){
 				boolean found = false;
 				outer:
-				for (BiomeGenBase biome: BiomeGenBase.biomeList){ 
+				for (BiomeGenBase biome: BiomeGenBase.getBiomeGenArray()){ 
 					if (biome != null){
 						for (EnumCreatureType type : EnumCreatureType.values()){ //Inner For
-							for (SpawnListEntry entry: BiomeReflector.reflectList(biome, type)){
+							for (SpawnListEntry entry : BiomeReflector.reflectList(biome, type)){
 								if (entry.entityClass == c){
 									defaultMap.set(c, type);
 									found = true;

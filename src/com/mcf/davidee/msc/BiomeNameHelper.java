@@ -1,7 +1,9 @@
 package com.mcf.davidee.msc;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -9,6 +11,11 @@ import java.util.Set;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BiomeNameHelper {
+	
+	public static final int MAX_REG_ID = 39;
+	public static final List<Integer> VANILLA_MUT = Arrays.asList(129, 130, 131, 132, 133, 134, 140, 149, 151, 155, 156, 157, 158, 160, 162, 163, 164, 165, 166, 167);
+	
+	
 
 	private static Map<String, BiomeGenBase> biomeMap;
 	private static Set<BiomeGenBase> biomeSet;
@@ -25,9 +32,14 @@ public class BiomeNameHelper {
 		nameSimplificationMap.put("xolova.blued00r.divinerpg.generation", "DRPG");
 	}
 	
+	//TODO This better - recognize vanilla biomes some other way
+	public static boolean isVanilla(BiomeGenBase biome) {
+		return biome.biomeID <= MAX_REG_ID || VANILLA_MUT.contains(biome.biomeID);
+	}
+	
 	
 	public static String getBiomeName(BiomeGenBase biome) {
-		String name = ((biome.biomeID <= 22) ? "Vanilla" : biome.getClass().getName()) + '.' + biome.biomeName;
+		String name = ((isVanilla(biome)) ? "Vanilla" : biome.getClass().getName()) + '.' + biome.biomeName;
 		for (Entry<String,String> entry : nameSimplificationMap.entrySet())
 			if (name.startsWith(entry.getKey()))
 				return entry.getValue() + '.' + biome.biomeName;
@@ -45,7 +57,7 @@ public class BiomeNameHelper {
 		biomeMap = new HashMap<String, BiomeGenBase>();
 		biomeSet = new HashSet<BiomeGenBase>();
 
-		for (BiomeGenBase biome : BiomeGenBase.biomeList) {
+		for (BiomeGenBase biome : BiomeGenBase.getBiomeGenArray()) {
 			if (biome != null) {
 				biomeMap.put(getBiomeName(biome), biome);
 				biomeSet.add(biome);

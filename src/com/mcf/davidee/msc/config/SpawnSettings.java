@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.network.packet.Packet;
 
 import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.Utils;
@@ -176,7 +175,7 @@ public class SpawnSettings {
 			warn("Unknown variable setting \"" + key + "\"", line, key + "="+ value);
 	}
 
-	public Packet createPacket() {
+	public MSCPacket createPacket() {
 		return MSCPacket.getPacket(PacketType.SETTINGS, readOnly, masterEnabled, spawnCaps, creatureFreq);
 	}
 

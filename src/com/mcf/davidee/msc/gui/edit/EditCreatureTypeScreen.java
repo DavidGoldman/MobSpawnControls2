@@ -15,13 +15,12 @@ import com.mcf.davidee.guilib.focusable.FocusableLabel;
 import com.mcf.davidee.guilib.focusable.FocusableWidget;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
 import com.mcf.davidee.guilib.vanilla.ScrollbarVanilla;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.Utils;
 import com.mcf.davidee.msc.gui.MSCScreen;
 import com.mcf.davidee.msc.packet.CreatureTypePacket;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class EditCreatureTypeScreen extends MSCScreen{
 
@@ -87,7 +86,7 @@ public class EditCreatureTypeScreen extends MSCScreen{
 			public void buttonClicked(Button button) {
 				setEnabled(false,save,move);
 				sent = true;
-				PacketDispatcher.sendPacketToServer(MSCPacket.getPacket(PacketType.CREATURE_TYPE, 
+				MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getPacket(PacketType.CREATURE_TYPE, 
 						packet.mod, packet.creatureType, modifications.toArray(new String[0])));
 				close();
 			}

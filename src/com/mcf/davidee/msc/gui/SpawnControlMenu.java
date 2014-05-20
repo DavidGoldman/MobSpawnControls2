@@ -6,10 +6,9 @@ import com.mcf.davidee.guilib.basic.Label;
 import com.mcf.davidee.guilib.core.Button;
 import com.mcf.davidee.guilib.core.Container;
 import com.mcf.davidee.guilib.vanilla.ButtonVanilla;
+import com.mcf.davidee.msc.MobSpawnControls;
 import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class SpawnControlMenu extends MSCScreen{
 	
@@ -34,13 +33,13 @@ public class SpawnControlMenu extends MSCScreen{
 	@Override
 	public void buttonClicked(Button button){
 		if (button == master)
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.BIOME_SETTING, mod + ":Master"));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.BIOME_SETTING, mod + ":Master"));
 		if (button == biomes)
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.BIOME_LIST, "0" + mod));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.BIOME_LIST, "0" + mod));
 		if (button == entities)
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.ENTITY_LIST, mod));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.ENTITY_LIST, mod));
 		if (button == eval)
-			PacketDispatcher.sendPacketToServer(MSCPacket.getRequestPacket(PacketType.BIOME_LIST, "1" + mod));
+			MobSpawnControls.DISPATCHER.sendToServer(MSCPacket.getRequestPacket(PacketType.BIOME_LIST, "1" + mod));
 		
 		setEnabled(false, master, biomes, entities, eval);
 	}

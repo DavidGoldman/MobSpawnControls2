@@ -1,12 +1,14 @@
 package com.mcf.davidee.msc.packet.settings;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
+
 import com.mcf.davidee.msc.network.MSCPacketHandler;
 import com.mcf.davidee.msc.packet.MSCPacket;
-
-import cpw.mods.fml.common.network.Player;
 
 public class SettingsPacket extends MSCPacket {
 
@@ -23,31 +25,28 @@ public class SettingsPacket extends MSCPacket {
 		creatureFreq = (Integer) data[3];
 		return this;
 	}
-
+	
 	@Override
-	public byte[] generatePacket() {
-		ByteArrayDataOutput dat = ByteStreams.newDataOutput();
-		dat.writeBoolean(readOnly);
-		dat.writeBoolean(masterEnabled);
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf to) throws IOException { 
+		to.writeBoolean(readOnly);
+		to.writeBoolean(masterEnabled);
 		for (int i = 0; i < caps.length; ++i)
-			dat.writeInt(caps[i]);
-		dat.writeInt(creatureFreq);
-		return dat.toByteArray();
+			to.writeInt(caps[i]);
+		to.writeInt(creatureFreq);
 	}
 
 	@Override
-	public MSCPacket readPacket(ByteArrayDataInput dat) {
-		readOnly = dat.readBoolean();
-		masterEnabled = dat.readBoolean();
+	public void decodeFrom(ChannelHandlerContext ctx, ByteBuf from) throws IOException { 
+		readOnly = from.readBoolean();
+		masterEnabled = from.readBoolean();
 		caps = new int[4];
 		for (int i = 0; i < caps.length; ++i)
-			caps[i] = dat.readInt();
-		creatureFreq = dat.readInt();
-		return this;
+			caps[i] = from.readInt();
+		creatureFreq = from.readInt();
 	}
 
 	@Override
-	public void execute(MSCPacketHandler handler, Player player) {
+	public void execute(MSCPacketHandler handler, EntityPlayer player) {
 		handler.handleSettings(this, player);
 	}
 
