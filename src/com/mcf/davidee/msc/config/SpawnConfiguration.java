@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import com.mcf.davidee.msc.BiomeNameHelper;
@@ -15,6 +16,7 @@ import com.mcf.davidee.msc.packet.MSCPacket;
 import com.mcf.davidee.msc.packet.MSCPacket.PacketType;
 import com.mcf.davidee.msc.reflect.BiomeReflector;
 import com.mcf.davidee.msc.spawning.CreatureTypeMap;
+import com.mojang.authlib.GameProfile;
 
 import cpw.mods.fml.common.ModContainer;
 
@@ -47,7 +49,13 @@ public class SpawnConfiguration {
 			EntityPlayerMP mp = (EntityPlayerMP) p;
 			if (mp.mcServer == null || mp.getCommandSenderName() == null)
 				return false;
-			return !mp.mcServer.isDedicatedServer() || mp.mcServer.getConfigurationManager().isPlayerOpped(mp.getCommandSenderName());
+			
+			// New method of checking whether the player is opped using GameProfile.
+			ServerConfigurationManager configManager	= mp.mcServer.getConfigurationManager();
+			EntityPlayerMP player						= configManager.func_152612_a(mp.getCommandSenderName());
+			GameProfile profile							= player.getGameProfile();
+			
+			return !mp.mcServer.isDedicatedServer() || configManager.func_152596_g(profile);
 		}
 		return false;
 	}
